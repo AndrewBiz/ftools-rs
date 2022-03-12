@@ -8,15 +8,18 @@ Feature: Generate a list of ftools-friendly-files
   #@announce
   Scenario: Output with -h produces usage information
     When I run `ftls -h`
-    Then the stderr should contain each of:
-    | phtools - *Keep Your Photos In Order*|
-    | (c) ANB                   |
-    | Usage:                    |
-    | Options:                  |
-    | -D --debug                |
-    | -h --help                 |
-    | --version                 |
-    | -v                        |
+    Then the stdout should contain each of:
+      | *Keep Your Media Files In Order* (c) ANB |
+      | USAGE:                                   |
+      | OPTIONS:                                 |
+      | -h, --help                               |
+      | -V, --version                            |
+
+#  #@announce
+#  Scenario: Debug (verbose) mode is implemented
+#    When I run `ftls -h`
+#    Then the stdout should contain each of:
+#      | -v, --verbose |
 
 #  #@announce
 #  Scenario: Output with -v produces version information

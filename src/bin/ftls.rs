@@ -7,6 +7,7 @@ mod ftools {
     // FILE_TYPE_AUDIO = %w[wav].freeze
 }
 
+// command options and arguments
 use clap::Parser;
 #[derive(Parser, Debug)]
 #[clap(version, long_about = None)]

@@ -5,7 +5,6 @@ Feature: Generate a list of ftools-friendly-files
   I want to get the list of foto\video files in a form of a plain text
   (one filename by line) in stdout channel
 
-  #@announce
   Scenario: Output with -h produces usage information
     When I run `ftls -h`
     Then the stdout should contain each of:
@@ -15,16 +14,22 @@ Feature: Generate a list of ftools-friendly-files
       | -h, --help                               |
       | -V, --version                            |
 
-#  #@announce
+#
 #  Scenario: Debug (verbose) mode is implemented
 #    When I run `ftls -h`
 #    Then the stdout should contain each of:
 #      | -v, --verbose |
-
-#  #@announce
-#  Scenario: Output with -v produces version information
-#    When I run `phls -v`
-#    Then the output should match /v[0-9]+\.[0-9]+\.[0-9]+(-[a-z,0-9]+)?/
+#
+  Scenario: Output with -V produces version information
+    When I run `ftls -V`
+    Then the output should match /[0-9]+\.[0-9]+\.[0-9]+(-[a-z,0-9]+)?/
+#
+  Scenario: Can show which file types are supported by the command
+    When I run `ftls --supported-types`
+    Then the stdout should contain each of:
+      | supports file types |
+      | jpg                 |
+      | heic                |
 #
 #  #@announce
 #  Scenario: Default output produces supported-by-phtools file list from current directory

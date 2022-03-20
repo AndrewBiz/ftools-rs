@@ -51,11 +51,11 @@ fn main() {
     let glob_options = glob::MatchOptions {
         case_sensitive: false,
         require_literal_separator: false,
-        require_literal_leading_dot: false,
+        require_literal_leading_dot: true,
     };
     for entry in glob::glob_with("./*.jpg", glob_options).unwrap() {
         match entry {
-            Ok(path) => println!("{:?}", path.display()),
+            Ok(path) => println!("{}", path.display()),
             Err(e) => println!("{:?}", e),
         }
     }

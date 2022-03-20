@@ -32,6 +32,17 @@ Feature: Generate a list of ftools-friendly-files
       | heic                |
 #
   #@announce
+  Scenario: The command does not process hidden files
+    Given empty files named:
+      | foto.jpg   |
+      | ._foto.jpg |
+    When I successfully run `ftls`
+    Then the stdout should contain each of:
+      | foto.jpg |
+    And the stdout should not contain "._foto.jpg"
+
+
+  #@announce
   Scenario: Default output produces supported-by-ftools file list from current directory
     Given empty files named:
 #    | foto.jpeg       |

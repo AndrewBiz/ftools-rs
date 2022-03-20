@@ -2,6 +2,7 @@ mod ftools;
 
 // command options and arguments
 use clap::Parser;
+
 #[derive(Parser, Debug)]
 #[clap(version, long_about = None)]
 #[clap(about =
@@ -31,8 +32,8 @@ struct Opt {
 }
 
 fn main() {
-    let opt = Opt::parse();
-    if opt.supported_types {
+    let cli_args = Opt::parse();
+    if cli_args.supported_types {
         println!(
             "ftls supports file types: {:?}",
             ftools::SUPPORTED_FILE_TYPE
@@ -52,5 +53,5 @@ fn main() {
             Err(e) => println!("{:?}", e),
         }
     }
-    // dbg!(opt);
+    // dbg!(cli_args);
 }

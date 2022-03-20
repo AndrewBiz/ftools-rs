@@ -2,14 +2,12 @@
 require 'date'
 require 'time'
 
-# Given(/^empty files named:$/) do |table|
-#   # table is a Cucumber::Ast::Table
-#   files = table.raw.flatten
-#   files.each do |file|
-#     step %(an empty file named "#{file}")
-#   end
-# end
-#
+Given(/^empty files named:$/) do |table|
+  table.raw.flatten.each do |file|
+    step %(an empty file named "#{file}")
+  end
+end
+
 # Given(/^example file "(.*?)" copied to "(.*?)"$/) do |arg1, arg2|
 #   basename = File.basename(arg1)
 #   file_out = File.join(expand_path('.'), arg2, basename)

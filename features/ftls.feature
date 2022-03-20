@@ -31,11 +31,11 @@ Feature: Generate a list of ftools-friendly-files
       | jpg                 |
       | heic                |
 #
-#  #@announce
-#  Scenario: Default output produces supported-by-phtools file list from current directory
-#    Given empty files named:
+  #@announce
+  Scenario: Default output produces supported-by-ftools file list from current directory
+    Given empty files named:
 #    | foto.jpeg       |
-#    | foto.jpg        |
+      | foto.jpg |
 #    | foto.tif        |
 #    | foto.tiff       |
 #    | foto.orf        |
@@ -55,10 +55,10 @@ Feature: Generate a list of ftools-friendly-files
 #    | video.m2t       |
 #    | video.m2ts      |
 #    | video.3gp       |
-#    When I successfully run `phls`
-#    Then the stdout should contain each of:
+    When I successfully run `ftls`
+    Then the stdout should contain each of:
 #    | foto.jpeg |
-#    | foto.jpg  |
+      | foto.jpg |
 #    | foto.tif  |
 #    | foto.tiff |
 #    | foto.orf  |
@@ -76,8 +76,8 @@ Feature: Generate a list of ftools-friendly-files
 #    | video.m2t |
 #    | video.m2ts|
 #    | video.3gp |
-#    And the stdout should not contain "foto_wrong.psd"
-#    And the stdout should not contain "video_wrong.xxx"
+    And the stdout should not contain "foto_wrong.psd"
+    And the stdout should not contain "video_wrong.xxx"
 #
 #  #@announce
 #  Scenario: Output produces file list filtered with given mask from current directory

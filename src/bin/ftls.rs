@@ -40,8 +40,24 @@ struct Opt {
 fn main() {
     let opt = Opt::parse();
     if opt.supported_types {
-        println!("ftls supports file types: {:?}", ftools::SUPPORTED_FILE_TYPE);
+        println!(
+            "ftls supports file types: {:?}",
+            ftools::SUPPORTED_FILE_TYPE
+        );
         std::process::exit(0)
     }
-    dbg!(opt);
+
+    // TMP globing
+    let glob_options = glob::MatchOptions {
+        case_sensitive: false,
+        require_literal_separator: false,
+        require_literal_leading_dot: false,
+    };
+    for entry in glob::glob_with("./*.jpg", glob_options).unwrap() {
+        match entry {
+            Ok(path) => println!("{:?}", path.display()),
+            Err(e) => println!("{:?}", e),
+        }
+    }
+    // dbg!(opt);
 }

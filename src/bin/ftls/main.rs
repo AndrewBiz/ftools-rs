@@ -1,5 +1,3 @@
-mod ftools;
-
 // command options and arguments
 use clap::Parser;
 

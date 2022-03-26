@@ -5,7 +5,7 @@ use clap::Parser;
 #[derive(Parser, Debug)]
 #[clap(version, long_about = None, verbatim_doc_comment)]
 
-///     *Keep Your Media Files In Order* (c) ANB
+/// *Keep Your Media Files In Order* (c) ANB
 ///     ftls scans given directories and generates list of files to standard
 /// output. In short it acts like 'ls' command (or 'dir' in Windows) but only for
 /// media files supported by ftools.
@@ -18,10 +18,9 @@ use clap::Parser;
 /// to STDOUT. The command is intended to be used with other programs
 /// connected via pipes as a 1st command in the pipe chain, e.g.:
 /// ```
-///    ftls abc '*aaa*' | ftrename -a anb
+///    ftls abc '*DSC*.jpg' | ftrename -a anb
 /// ```
-/// => scans 'abc' folder and sends all found files filtered
-/// with *aaa* to ftrename command
+/// => scans 'abc' folder and sends all found *DSC*.jpg files to ftrename command
 
 struct CliArgs {
     #[clap(long)]

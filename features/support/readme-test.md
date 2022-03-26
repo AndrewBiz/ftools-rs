@@ -15,9 +15,9 @@ OR
     bundle install
 ```
 
-3. Make executable test-cli.sh in project root:
+3. Make executable script in project_root/tests:
 ```
-    vi test-cli.sh
+    vi cucu.sh
         RUST_EXE="/target/debug"
         PATH=$PWD$RUST_EXE:$PATH
         cucumber
@@ -28,5 +28,5 @@ OR
 1. Create cucumber test features in ./features
 2. test:
 ```
-    ./test-cli.sh
+    ./tests/cucu.sh
 ```

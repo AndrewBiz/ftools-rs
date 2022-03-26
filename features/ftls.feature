@@ -52,15 +52,15 @@ Feature: Generate a list of ftools-friendly-files
 #    | foto.arw        |
 #    | foto.png        |
 #    | foto.dng        |
-#    | foto.heic       |
-#    | foto_wrong.psd  |
+    | foto.heic       |
+    | foto_wrong.psd  |
 #    | video.avi       |
 #    | video.mp4       |
 #    | video.mpg       |
 #    | video.mts       |
 #    | video.dv        |
 #    | video.mov       |
-#    | video_wrong.xxx |
+    | video_wrong.xxx |
 #    | video.mkv       |
 #    | video.m2t       |
 #    | video.m2ts      |
@@ -75,7 +75,7 @@ Feature: Generate a list of ftools-friendly-files
 #    | foto.arw  |
 #    | foto.png  |
 #    | foto.dng  |
-#    | foto.heic |
+    | foto.heic |
 #    | video.avi |
 #    | video.mp4 |
 #    | video.mpg |

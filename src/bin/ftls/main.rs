@@ -1,6 +1,7 @@
+mod ftls;
+
 // command options and arguments
 use clap::Parser;
-
 #[derive(Parser, Debug)]
 #[clap(version, long_about = None, verbatim_doc_comment)]
 
@@ -44,10 +45,12 @@ fn main() {
         require_literal_separator: false,
         require_literal_leading_dot: true,
     };
-    for entry in glob::glob_with("./*.jpg", glob_options).unwrap() {
+    for entry in glob::glob_with("[!.]*.*", glob_options).expect("Failed to read glob pattern") {
         match entry {
-            Ok(path) => println!("{}", path.display()),
-            Err(e) => println!("{:?}", e),
+            Ok(path) => {
+                ftls::output_file(&path);
+            }
+            Err(e) => println!("ERROR {:?}", e),
         }
     }
     // dbg!(cli_args);

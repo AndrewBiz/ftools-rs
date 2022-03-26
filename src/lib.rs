@@ -1,4 +1,3 @@
-
 pub const SUPPORTED_FILE_TYPE: [&str; 2] = ["jpg", "heic"];
 // FILE_TYPE_IMAGE_NORMAL = %w[jpg jpeg tif tiff png heic].freeze
 // FILE_TYPE_IMAGE_RAW = %w[orf arw dng].freeze

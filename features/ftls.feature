@@ -45,26 +45,28 @@ Feature: Generate a list of ftools-friendly-files
   Scenario: Default output produces supported-by-ftools file list from current directory
     Given empty files named:
 #    | foto.jpeg       |
-      | foto.jpg |
+      | foto.jpg        |
 #    | foto.tif        |
 #    | foto.tiff       |
 #    | foto.orf        |
 #    | foto.arw        |
 #    | foto.png        |
 #    | foto.dng        |
-    | foto.heic       |
-    | foto_wrong.psd  |
+      | foto.heic       |
+      | foto_wrong.psd  |
 #    | video.avi       |
 #    | video.mp4       |
 #    | video.mpg       |
 #    | video.mts       |
 #    | video.dv        |
 #    | video.mov       |
-    | video_wrong.xxx |
+      | video_wrong.xxx |
 #    | video.mkv       |
 #    | video.m2t       |
 #    | video.m2ts      |
-#    | video.3gp       |
+#      | video.3gp       |
+      | file_no_ext     |
+#
     When I successfully run `ftls`
     Then the stdout should contain each of:
 #    | foto.jpeg |
@@ -88,9 +90,11 @@ Feature: Generate a list of ftools-friendly-files
 #    | video.3gp |
     And the stdout should not contain "foto_wrong.psd"
     And the stdout should not contain "video_wrong.xxx"
-#
+    And the stdout should not contain "file_no_ext"
+
+
 #  #@announce
-#  Scenario: Output produces file list filtered with given mask from current directory
+##  Scenario: Output produces file list filtered with given mask from current directory
 #    Given empty files named:
 #    | foto_yes_.jpeg  |
 #    | foto.jpg        |

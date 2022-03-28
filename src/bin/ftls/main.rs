@@ -37,20 +37,6 @@ fn main() {
         );
         std::process::exit(0)
     }
-
-    // TMP globing
-    let glob_options = glob::MatchOptions {
-        case_sensitive: false,
-        require_literal_separator: false,
-        require_literal_leading_dot: true,
-    };
-    for entry in glob::glob_with("[!.]*.*", glob_options).expect("Failed to read glob pattern") {
-        match entry {
-            Ok(path) => {
-                ftls::output_file(&path);
-            }
-            Err(e) => println!("ERROR {:?}", e),
-        }
-    }
-    // dbg!(cli_args);
+    let app = ftls::App {};
+    app.run();
 }

@@ -18,9 +18,9 @@ use clap::Parser;
 /// to STDOUT. The command is intended to be used with other programs
 /// connected via pipes as a 1st command in the pipe chain, e.g.:
 /// ```
-///    ftls abc '*DSC*.jpg' | ftrename -a anb
+///    ftls abc 'IMG_*.jpg' | ftrename -a anb
 /// ```
-/// => scans 'abc' folder and sends all found *DSC*.jpg files to ftrename command
+/// => scans 'abc' folder and sends all found IMG_*.jpg files to ftrename command
 
 struct CliArgs {
     #[clap(long)]

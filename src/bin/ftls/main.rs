@@ -9,8 +9,8 @@ use clap::Parser;
 ///     ftls scans given directories and generates list of files to standard
 /// output. In short it acts like 'ls' command (or 'dir' in Windows) but only for
 /// media files supported by ftools.
-/// Set DIRs to be scanned as a parameters. If no DIRs are set - current dir (.)
-/// will be scanned. Set FILEMASKs as a parameters - and only files matching the
+/// Set DIRs to be scanned as an arguments. If no DIRs are set - current dir '.'
+/// will be scanned. Set FILEMASKs as an arguments - and only files matching the
 /// masks will be processed. If no FILEMASK is set '*.*' will be used by-default.
 /// To avoid unnecessary mask extraction by OS - put it in ''.
 ///     ftls acts as a 'source' program meaning it does not require any input
@@ -26,10 +26,14 @@ struct CliArgs {
     #[clap(long)]
     /// Show supported file types
     supported_types: bool,
+
+    #[clap(default_value = ".")]
+    dir_or_filemask: Vec<String>,
 }
 
 fn main() {
     let cli_args = CliArgs::parse();
+
     if cli_args.supported_types {
         println!(
             "ftls supports file types: {:?}",
@@ -39,4 +43,6 @@ fn main() {
     }
     let app = ftls::App {};
     app.run();
+
+    // dbg!(cli_args);
 }

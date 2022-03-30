@@ -93,50 +93,50 @@ Feature: Generate a list of ftools-friendly-files
     And the stdout should not contain "file_no_ext"
 
 
-#  #@announce
-##  Scenario: Output produces file list filtered with given mask from current directory
-#    Given empty files named:
-#    | foto_yes_.jpeg  |
-#    | foto.jpg        |
-#    | foto_yes_.tif   |
-#    | foto.tiff       |
-#    | foto_yes_.orf   |
-#    | foto.arw        |
-#    | foto_yes_.png   |
-#    | foto.dng        |
-#    | foto_wrong.psd  |
-#    | video.avi       |
-#    | video_yes_.mp4  |
-#    | video.mpg       |
-#    | video_yes_.mts  |
-#    | video.dv        |
-#    | video.mov       |
-#    | video_wrong.xxx |
-#    | video.mkv       |
-#    | video.m2t       |
-#    | video.m2ts      |
-#    When I successfully run `phls '*_yes*.*'`
-#    Then the stdout should contain each of:
-#    | foto_yes_.jpeg  |
-#    | foto_yes_.tif   |
-#    | foto_yes_.orf   |
-#    | foto_yes_.png   |
-#    | video_yes_.mp4  |
-#    | video_yes_.mts  |
-#    And the stdout should not contain any of:
-#    | foto.jpg        |
-#    | foto.tiff       |
-#    | foto.arw        |
-#    | foto.dng        |
-#    | foto_wrong.psd  |
-#    | video.avi       |
-#    | video.mpg       |
-#    | video.dv        |
-#    | video.mov       |
-#    | video_wrong.xxx |
-#    | video.mkv       |
-#    | video.m2t       |
-#    | video.m2ts      |
+#  Scenario: Output produces file list filtered with given mask from current directory
+    Given empty files named:
+      | foto_yes_.jpg   |
+      | foto.jpg        |
+#      | foto_yes_.tif   |
+#      | foto.tiff       |
+#      | foto_yes_.orf   |
+#      | foto.arw        |
+#      | foto_yes_.png   |
+#      | foto.dng        |
+#      | foto_wrong.psd  |
+#      | video.avi       |
+#      | video_yes_.mp4  |
+#      | video.mpg       |
+#      | video_yes_.mts  |
+#      | video.dv        |
+#      | video.mov       |
+#      | video_wrong.xxx |
+#      | video.mkv       |
+#      | video.m2t       |
+#      | video.m2ts      |
+    When I successfully run `ftls '*_yes*.*'`
+    Then the stdout should contain each of:
+      | foto_yes_.jpg  |
+#      | foto_yes_.tif  |
+#      | foto_yes_.orf  |
+#      | foto_yes_.png  |
+#      | video_yes_.mp4 |
+#      | video_yes_.mts |
+    And the stdout should not contain any of:
+      | foto.jpg        |
+      | foto.tiff       |
+      | foto.arw        |
+      | foto.dng        |
+      | foto_wrong.psd  |
+      | video.avi       |
+      | video.mpg       |
+      | video.dv        |
+      | video.mov       |
+      | video_wrong.xxx |
+      | video.mkv       |
+      | video.m2t       |
+      | video.m2ts      |
+
 #
 #  #@announce
 #  Scenario: The output DOES NOT show unsupported files EVEN if I intentionally enter it as a parameter

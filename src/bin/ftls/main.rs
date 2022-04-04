@@ -43,4 +43,6 @@ fn main() {
     }
     let app = ftls::App::init(cli_args);
     app.run();
+
+    // dbg!(cli_args);
 }

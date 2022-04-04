@@ -22,7 +22,7 @@ use clap::Parser;
 /// ```
 /// => scans 'abc' folder and sends all found IMG_*.jpg files to ftrename command
 
-struct CliArgs {
+pub struct CliArgs {
     #[clap(long)]
     /// Show supported file types
     supported_types: bool,
@@ -41,8 +41,6 @@ fn main() {
         );
         std::process::exit(0)
     }
-    let app = ftls::App {};
+    let app = ftls::App::init(cli_args);
     app.run();
-
-    // dbg!(cli_args);
 }

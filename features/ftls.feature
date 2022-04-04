@@ -93,50 +93,93 @@ Feature: Generate a list of ftools-friendly-files
     And the stdout should not contain "file_no_ext"
 
 
-#  Scenario: Output produces file list filtered with given mask from current directory
-    Given empty files named:
-      | foto_yes_.jpg   |
-      | foto.jpg        |
-#      | foto_yes_.tif   |
+  Scenario: The output shows files inside given directories
+    Given a directory named "fotos1"
+    And empty files named:
+      | ./fotos1/f1.jpg |
+      | ./fotos1/f2.jpg |
+      | ./fotos1/f3.jpg |
+      | ./fotos1/f4.jpg |
+    Given a directory named "fotos2"
+    And empty files named:
+      | ./fotos2/f1.jpg |
+      | ./fotos2/f2.jpg |
+      | ./fotos2/f3.jpg |
+      | ./fotos2/f4.jpg |
+    When I successfully run `ftls fotos1 fotos2`
+    Then the stdout should contain each of:
+      | fotos1/f1.jpg |
+      | fotos1/f2.jpg |
+      | fotos1/f3.jpg |
+      | fotos1/f4.jpg |
+      | fotos2/f1.jpg |
+      | fotos2/f2.jpg |
+      | fotos2/f3.jpg |
+      | fotos2/f4.jpg |
+
+
+#  Scenario: The output shows files inside directories and subdirectories if run recursive
+#    Given a directory named "fotos"
+#    And empty files named:
+#    | ./fotos/f6.jpg         |
+#    And a directory named "fotos/fotos2"
+#    And empty files named:
+#    | ./fotos/fotos2/f6.tif  |
+#    And a directory named "fotos/fotos2/fotos3"
+#    And empty files named:
+#    | ./fotos/fotos2/fotos3/f6.png |
+#    When I successfully run `phls --recursive fotos`
+#    Then the stdout should contain each of:
+#    | fotos/f6.jpg                 |
+#    | fotos/fotos2/f6.tif          |
+#    | fotos/fotos2/fotos3/f6.png   |
+#
+
+
+##  Scenario: Output produces file list filtered with given mask from current directory
+#    Given empty files named:
+#      | foto_yes_.jpg   |
+#      | foto.jpg        |
+##      | foto_yes_.tif   |
+##      | foto.tiff       |
+##      | foto_yes_.orf   |
+##      | foto.arw        |
+##      | foto_yes_.png   |
+##      | foto.dng        |
+##      | foto_wrong.psd  |
+##      | video.avi       |
+##      | video_yes_.mp4  |
+##      | video.mpg       |
+##      | video_yes_.mts  |
+##      | video.dv        |
+##      | video.mov       |
+##      | video_wrong.xxx |
+##      | video.mkv       |
+##      | video.m2t       |
+##      | video.m2ts      |
+#    When I successfully run `ftls '*_yes*.*'`
+#    Then the stdout should contain each of:
+#      | foto_yes_.jpg  |
+##      | foto_yes_.tif  |
+##      | foto_yes_.orf  |
+##      | foto_yes_.png  |
+##      | video_yes_.mp4 |
+##      | video_yes_.mts |
+#    And the stdout should not contain any of:
+#      | foto.jpg        |
 #      | foto.tiff       |
-#      | foto_yes_.orf   |
 #      | foto.arw        |
-#      | foto_yes_.png   |
 #      | foto.dng        |
 #      | foto_wrong.psd  |
 #      | video.avi       |
-#      | video_yes_.mp4  |
 #      | video.mpg       |
-#      | video_yes_.mts  |
 #      | video.dv        |
 #      | video.mov       |
 #      | video_wrong.xxx |
 #      | video.mkv       |
 #      | video.m2t       |
 #      | video.m2ts      |
-    When I successfully run `ftls '*_yes*.*'`
-    Then the stdout should contain each of:
-      | foto_yes_.jpg  |
-#      | foto_yes_.tif  |
-#      | foto_yes_.orf  |
-#      | foto_yes_.png  |
-#      | video_yes_.mp4 |
-#      | video_yes_.mts |
-    And the stdout should not contain any of:
-      | foto.jpg        |
-      | foto.tiff       |
-      | foto.arw        |
-      | foto.dng        |
-      | foto_wrong.psd  |
-      | video.avi       |
-      | video.mpg       |
-      | video.dv        |
-      | video.mov       |
-      | video_wrong.xxx |
-      | video.mkv       |
-      | video.m2t       |
-      | video.m2ts      |
-
+#
 #
 #  #@announce
 #  Scenario: The output DOES NOT show unsupported files EVEN if I intentionally enter it as a parameter
@@ -189,23 +232,6 @@ Feature: Generate a list of ftools-friendly-files
 #    When I successfully run `phls fotos videos`
 #    Then the stdout should not contain "fotos/f5_wrong.ppp"
 #    And  the stdout should not contain "videos/v5_wrong.vvv"
-#
-#  #@announce
-#  Scenario: The output shows files inside directories and subdirectories if run recursive
-#    Given a directory named "fotos"
-#    And empty files named:
-#    | ./fotos/f6.jpg         |
-#    And a directory named "fotos/fotos2"
-#    And empty files named:
-#    | ./fotos/fotos2/f6.tif  |
-#    And a directory named "fotos/fotos2/fotos3"
-#    And empty files named:
-#    | ./fotos/fotos2/fotos3/f6.png |
-#    When I successfully run `phls --recursive fotos`
-#    Then the stdout should contain each of:
-#    | fotos/f6.jpg                 |
-#    | fotos/fotos2/f6.tif          |
-#    | fotos/fotos2/fotos3/f6.png   |
 #
 #  #@announce
 #  Scenario: Output produces file list filtered with given masks from given directories

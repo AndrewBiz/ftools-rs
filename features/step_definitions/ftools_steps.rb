@@ -49,7 +49,7 @@ end
 
 Then('the {channel} should not contain any of:') do |channel, table|
   table.raw.flatten.each do |item|
-    step %(the #{channel} should not contain #{item}")
+    step %(the #{channel} should not contain "#{item}")
   end
 end
 

@@ -47,7 +47,6 @@ impl App {
                 let mut pattern = String::new();
                 pattern.push_str(dir);
                 pattern.push('/');
-                // pattern.push_str("[!.]"); //does not work with ok*.jpg mask
                 pattern.push_str(mask);
                 // dbg!(&pattern);
                 for entry in
@@ -67,6 +66,18 @@ impl App {
 
 // output file to stdout
 fn output_file(path: &std::path::Path) {
+    // checking if file is hidden in unix (starts with . )
+    match path.file_name() {
+        None => return,
+        Some(file_name) => match file_name.to_str() {
+            None => return,
+            Some(name) => {
+                if name.starts_with('.') {
+                    return
+                }
+            }
+        },
+    }
     // checking file extension - should be exist and supported
     match path.extension() {
         None => (),

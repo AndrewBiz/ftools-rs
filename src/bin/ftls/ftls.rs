@@ -4,6 +4,7 @@ use crate::CliArgs;
 pub struct App {
     dirs2scan: Vec<String>,
     file_masks: Vec<String>,
+    recursive: bool,
 }
 
 impl App {
@@ -31,6 +32,7 @@ impl App {
         App {
             dirs2scan,
             file_masks,
+            recursive : args.recursive,
         }
     }
 
@@ -47,6 +49,9 @@ impl App {
                 let mut pattern = String::new();
                 pattern.push_str(dir);
                 pattern.push('/');
+                if self.recursive {
+                    pattern.push_str("**/");
+                }
                 pattern.push_str(mask);
                 // dbg!(&pattern);
                 for entry in

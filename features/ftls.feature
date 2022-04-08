@@ -137,22 +137,21 @@ Feature: Generate a list of ftools-friendly-files
       | ok-foto6.heic |
 
 
-#  Scenario: The output shows files inside directories and subdirectories if run recursive
-#    Given a directory named "fotos"
-#    And empty files named:
-#    | ./fotos/f6.jpg         |
-#    And a directory named "fotos/fotos2"
-#    And empty files named:
-#    | ./fotos/fotos2/f6.tif  |
-#    And a directory named "fotos/fotos2/fotos3"
-#    And empty files named:
-#    | ./fotos/fotos2/fotos3/f6.png |
-#    When I successfully run `phls --recursive fotos`
-#    Then the stdout should contain each of:
-#    | fotos/f6.jpg                 |
-#    | fotos/fotos2/f6.tif          |
-#    | fotos/fotos2/fotos3/f6.png   |
-#
+  Scenario: The output shows files inside directories and subdirectories if run recursive
+    Given a directory named "fotos"
+    And empty files named:
+      | ./fotos/f1.jpg |
+    And a directory named "fotos/fotos2"
+    And empty files named:
+      | ./fotos/fotos2/f2.jpg |
+    And a directory named "fotos/fotos2/fotos3"
+    And empty files named:
+      | ./fotos/fotos2/fotos3/f3.jpg |
+    When I successfully run `ftls --recursive fotos`
+    Then the stdout should contain each of:
+      | fotos/f1.jpg               |
+      | fotos/fotos2/f2.jpg        |
+      | fotos/fotos2/fotos3/f3.jpg |
 
 
 #  #@announce

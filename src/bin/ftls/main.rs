@@ -27,7 +27,12 @@ pub struct CliArgs {
     /// Show supported file types
     supported_types: bool,
 
+    #[clap(short, long)]
+    /// Recursively scan directories
+    recursive: bool,
+
     #[clap(default_value = ".")]
+    /// Set DIRs to be scanned and FILEMASKs to filter files
     dir_or_filemask: Vec<String>,
 }
 

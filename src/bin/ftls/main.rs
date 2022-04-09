@@ -31,8 +31,9 @@ pub struct CliArgs {
     /// Recursively scan directories
     recursive: bool,
 
-    #[clap(default_value = ".")]
-    /// Set DIRs to be scanned and FILEMASKs to filter files
+    #[clap(verbatim_doc_comment)]
+    /// Set DIRs to be scanned and FILEMASKs to filter files.
+    /// Empty value is treated as if user set `ftls . '*.*'`
     dir_or_filemask: Vec<String>,
 }
 

@@ -9,7 +9,6 @@ pub struct App {
 
 impl App {
     pub fn init(args: CliArgs) -> App {
-        // dbg!(&args);
         // checking dirs and masks to be scanned
         let mut dirs2scan: Vec<String> = Vec::new();
         let mut file_masks: Vec<String> = Vec::new();
@@ -29,6 +28,11 @@ impl App {
         if file_masks.is_empty() {
             file_masks.push(String::from("*.*"))
         };
+
+        log::debug!("DIRs to be scanned: {:?}", &dirs2scan);
+        log::debug!("FILEMASKs to be used: {:?}", &file_masks);
+        log::debug!("Recursive scan: {:?}", &args.recursive);
+
         App {
             dirs2scan,
             file_masks,
@@ -37,13 +41,13 @@ impl App {
     }
 
     pub fn run(&self) {
+        log::info!("Start run");
+
         let glob_options = glob::MatchOptions {
             case_sensitive: false,
             require_literal_separator: false,
             require_literal_leading_dot: false,
         };
-        // dbg!(&self.dirs2scan);
-        // dbg!(&self.file_masks);
         for dir in &self.dirs2scan {
             for mask in &self.file_masks {
                 let mut pattern = String::new();
@@ -53,7 +57,7 @@ impl App {
                     pattern.push_str("**/");
                 }
                 pattern.push_str(mask);
-                // dbg!(&pattern);
+                log::debug!("Using glob pattern: {:?}", &pattern);
                 for entry in
                     glob::glob_with(&pattern, glob_options).expect("Failed to read glob pattern")
                 {
@@ -66,6 +70,7 @@ impl App {
                 }
             }
         }
+        log::info!("Finish run");
     }
 }
 

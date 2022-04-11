@@ -38,11 +38,15 @@ pub struct CliArgs {
 }
 
 fn main() {
+    env_logger::init();
+    log::info!("START main");
+
     let cli_args = CliArgs::parse();
+    log::debug!("Arguments set by the user: {:?}", &cli_args);
 
     if cli_args.supported_types {
         println!(
-            "ftls supports file types: {:?}",
+            "ftls supports file types: {:#?}",
             ftools::SUPPORTED_FILE_TYPE
         );
         std::process::exit(0)
@@ -50,5 +54,5 @@ fn main() {
     let app = ftls::App::init(cli_args);
     app.run();
 
-    // dbg!(cli_args);
+    log::info!("FINISH main");
 }

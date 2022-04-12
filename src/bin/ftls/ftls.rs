@@ -76,13 +76,22 @@ impl App {
 
 // output file to stdout
 fn output_file(path: &std::path::Path) {
+    log::info!("Processing file: {}", path.to_str().unwrap());
+
     // checking if file is hidden in unix (starts with . )
     match path.file_name() {
-        None => return,
+        None => {
+            log::info!("NO file name, return");
+            return
+        },
         Some(file_name) => match file_name.to_str() {
-            None => return,
+            None => {
+                log::info!("NO str file name, return");
+                return
+            },
             Some(name) => {
                 if name.starts_with('.') {
+                    log::info!("Hidden file, return");
                     return
                 }
             }
@@ -90,14 +99,20 @@ fn output_file(path: &std::path::Path) {
     }
     // checking file extension - should be exist and supported
     match path.extension() {
-        None => (),
+        None => {
+            log::info!("NO file extension, return");
+            ()
+        },
         Some(ext) => {
             let ext = ext.to_ascii_lowercase();
             match ftools::SUPPORTED_FILE_TYPE
                 .iter()
                 .position(|&supported_ext| supported_ext == ext)
             {
-                None => (),
+                None => {
+                    log::info!("Unsupported file type, return");
+                    ()
+                },
                 Some(_) => println!("{}", path.display()),
             }
         }

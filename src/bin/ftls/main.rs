@@ -24,6 +24,10 @@ use clap::Parser;
 
 pub struct CliArgs {
     #[clap(long)]
+    /// Show debug information
+    debug: bool,
+
+    #[clap(long)]
     /// Show supported file types
     supported_types: bool,
 
@@ -38,10 +42,13 @@ pub struct CliArgs {
 }
 
 fn main() {
-    env_logger::init();
-    log::info!("START main");
-
     let cli_args = CliArgs::parse();
+    if cli_args.debug {
+        env_logger::Builder::new().filter_level(log::LevelFilter::Debug).init();
+    } else {
+        env_logger::init();
+    }
+    log::info!("START main");
     log::debug!("Arguments set by the user: {:?}", &cli_args);
 
     if cli_args.supported_types {

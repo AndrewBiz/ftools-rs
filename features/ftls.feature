@@ -12,13 +12,9 @@ Feature: Generate a list of ftools-friendly-files
       | USAGE:                                   |
       | OPTIONS:                                 |
       | -h, --help                               |
+      | --debug                                  |
       | -V, --version                            |
 
-
-#  Scenario: Debug (verbose) mode is implemented
-#    When I run `ftls -h`
-#    Then the stdout should contain each of:
-#      | -v, --verbose |
 
   Scenario: Output with -V produces version information
     When I run `ftls -V`

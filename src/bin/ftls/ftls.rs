@@ -77,7 +77,11 @@ impl App {
 // output file to stdout
 fn output_file(path: &std::path::Path) {
     log::debug!("Processing file: {}", path.to_str().unwrap());
-
+    // checking if the pth is dir
+    if path.is_dir() {
+        log::debug!("this is dir, not file, return");
+        return;
+    }
     // checking if file is hidden in unix (starts with . )
     match path.file_name() {
         None => {

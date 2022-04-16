@@ -187,72 +187,52 @@ Feature: Generate a list of ftools-friendly-files
       | foto_wrong1.jpg |
       | foto_wrong2.jpg |
 
-#  #@announce
-#  Scenario: The output DOES NOT show usupported files inside directories entered as paramenets
-#    Given a directory named "fotos"
-#    And empty files named:
-#    | ./fotos/f5_wrong.ppp  |
-#    And a directory named "videos"
-#    And empty files named:
-#    | ./videos/v5_wrong.vvv  |
-#    When I successfully run `phls fotos videos`
-#    Then the stdout should not contain "fotos/f5_wrong.ppp"
-#    And  the stdout should not contain "videos/v5_wrong.vvv"
-#
-#  #@announce
-#  Scenario: Output produces file list filtered with given masks from given directories
-#    Given empty files named:
-#    | foto_yes_.jpeg  |
-#    | foto_yes_.tif   |
-#    | foto.tiff       |
-#    | foto.arw        |
-#    And a directory named "fotos"
-#    And empty files named:
-#    | fotos/foto1_yes_.jpeg  |
-#    | fotos/foto1_yes_.tif   |
-#    | fotos/foto1.tiff       |
-#    | fotos/foto1.arw        |
+  Scenario: The output DOES NOT show usupported files inside directories entered as paramenets
+    Given a directory named "fotos"
+    And empty files named:
+    | ./fotos/f5_wrong.ppp  |
+    And a directory named "videos"
+    And empty files named:
+    | ./videos/v5_wrong.vvv  |
+    When I successfully run `ftls fotos videos`
+    Then the stdout should not contain "fotos/f5_wrong.ppp"
+    And  the stdout should not contain "videos/v5_wrong.vvv"
+
+  Scenario: Output produces file list filtered with given masks from given directories
+    Given a directory named "fotos"
+    And empty files named:
+      | fotos/foto1_yes_.jpg  |
+      | fotos/foto1_yes_.heic |
+      | fotos/foto1_no.jpg    |
+      | fotos/foto1_no.heic   |
 #    And a directory named "videos"
 #    And empty files named:
 #    | videos/video.avi       |
 #    | videos/video_yes_.mp4  |
 #    | videos/video.mpg       |
 #    | videos/video_yes_.mts  |
-#    When I successfully run `phls fotos videos '*_yes*'`
-#    Then the stdout should contain each of:
-#    | fotos/foto1_yes_.jpeg  |
-#    | fotos/foto1_yes_.tif   |
-#    | videos/video_yes_.mp4  |
-#    | videos/video_yes_.mts  |
-#    And the stdout should not contain any of:
-#    | foto_yes_.jpeg  |
-#    | foto_yes_.tif   |
-#    | foto.tiff       |
-#    | foto.arw        |
-#    | fotos/foto1.tiff       |
-#    | fotos/foto1.arw        |
-#    | videos/video.avi       |
-#    | videos/video.mpg       |
-#
-#  #@announce
-#  Scenario: The output shows only files, no folders (even if folder name looks like a file)
-#    Given a directory named "foto.jpg"
-#    And a directory named "video.mov"
-#    And empty files named:
-#    | foto1.jpg         |
-#    | foto2.jpg         |
-#    | video1.mov        |
-#    | video2.mov        |
-#    When I successfully run `phls`
-#    Then the stdout should contain each of:
-#    | foto1.jpg         |
-#    | foto2.jpg         |
-#    | video1.mov        |
-#    | video2.mov        |
-#    And the stdout should not contain any of:
-#    | foto.jpg  |
-#    | video.mov |
-#
+    When I successfully run `ftls fotos videos '*_yes*'`
+    Then the stdout should contain each of:
+      | fotos/foto1_yes_.jpg  |
+      | fotos/foto1_yes_.heic |
+#      | videos/video_yes_.mp4 |
+#      | videos/video_yes_.mts |
+    And the stdout should not contain any of:
+      | fotos/foto1_no.jpg  |
+      | fotos/foto1_no.heic |
+
+  Scenario: The output shows only files, no folders (even if folder name looks like a file)
+    Given a directory named "foto.jpg"
+    And empty files named:
+    | foto1.jpg         |
+    | foto2.jpg         |
+    When I successfully run `ftls`
+    Then the stdout should contain each of:
+    | foto1.jpg         |
+    | foto2.jpg         |
+    And the stdout should not contain any of:
+    | foto.jpg  |
+
 #  #@announce
 #  Scenario: Output produces supported-by-phtools file list keeping extentions unchanged (e.g. capitalized will remain capitalized)
 #    Given a directory named "capitalized"

@@ -101,7 +101,6 @@ fn output_file(path: &std::path::Path) {
     match path.extension() {
         None => {
             log::debug!("NO file extension, return");
-            ()
         },
         Some(ext) => {
             let ext = ext.to_ascii_lowercase();
@@ -111,7 +110,6 @@ fn output_file(path: &std::path::Path) {
             {
                 None => {
                     log::debug!("Unsupported file type, return");
-                    ()
                 },
                 Some(_) => println!("{}", path.display()),
             }

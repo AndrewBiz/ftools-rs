@@ -149,47 +149,44 @@ Feature: Generate a list of ftools-friendly-files
       | fotos/fotos2/f2.jpg        |
       | fotos/fotos2/fotos3/f3.jpg |
 
+  Scenario: The output DOES NOT show unsupported files EVEN if I intentionally enter it as a parameter
+    Given empty files named:
+    | foto_wrong.psd  |
+    | video_wrong.xxx |
+    When I successfully run `ftls foto_wrong.psd video_wrong.xxx`
+    Then the stdout should not contain "foto_wrong.psd"
+    And  the stdout should not contain "video_wrong.xxx"
 
-#  #@announce
-#  Scenario: The output DOES NOT show unsupported files EVEN if I intentionally enter it as a parameter
-#    Given empty files named:
-#    | foto_wrong.psd  |
-#    | video_wrong.xxx |
-#    When I successfully run `phls foto_wrong.psd video_wrong.xxx`
-#    Then the stdout should not contain "foto_wrong.psd"
-#    And  the stdout should not contain "video_wrong.xxx"
-#
-#  #@announce
-#  Scenario: The output shows files only inside directories entered as paramenets
-#    Given a directory named "fotos"
-#    And empty files named:
-#    | ./fotos/f4.jpg       |
-#    | ./fotos/f4.tiff      |
-#    | ./fotos/f4.orf       |
-#    | ./fotos/f4.arw       |
-#    And a directory named "videos"
+  Scenario: The output shows files only inside directories entered as paramenets and not files outside
+    Given a directory named "fotos"
+    And empty files named:
+      | ./fotos/f1.jpg  |
+      | ./fotos/f2.jpg  |
+      | ./fotos/f3.jpg  |
+      | ./fotos/f4.heic |
+    And a directory named "videos"
 #    And empty files named:
 #    | ./videos/v4.avi       |
 #    | ./videos/v4.mp4       |
 #    | ./videos/v4.mpg       |
 #    | ./videos/v4.dv        |
-#    And empty files named:
-#    | foto_wrong.jpg  |
-#    | video_wrong.jpg |
-#    When I successfully run `phls fotos videos`
-#    Then the stdout should contain each of:
-#    | fotos/f4.jpg  |
-#    | fotos/f4.tiff |
-#    | fotos/f4.orf  |
-#    | fotos/f4.arw  |
-#    | videos/v4.avi |
-#    | videos/v4.mp4 |
-#    | videos/v4.mpg |
-#    | videos/v4.dv  |
-#    And the stdout should not contain any of:
-#    | foto_wrong.jpg  |
-#    | video_wrong.jpg |
-#
+    And empty files named:
+      | foto_wrong1.jpg |
+      | foto_wrong2.jpg |
+    When I successfully run `ftls fotos videos`
+    Then the stdout should contain each of:
+      | tos/f1.jpg    |
+      | fotos/f3.jpg  |
+      | fotos/f2.jpg  |
+      | fotos/f4.heic |
+#      | videos/v4.avi   |
+#      | videos/v4.mp4   |
+#      | videos/v4.mpg   |
+#      | videos/v4.dv    |
+    And the stdout should not contain any of:
+      | foto_wrong1.jpg |
+      | foto_wrong2.jpg |
+
 #  #@announce
 #  Scenario: The output DOES NOT show usupported files inside directories entered as paramenets
 #    Given a directory named "fotos"

@@ -41,7 +41,7 @@ impl App {
     }
 
     pub fn run(&self) {
-        log::info!("Start run");
+        log::debug!("Start run");
 
         let glob_options = glob::MatchOptions {
             case_sensitive: false,
@@ -70,28 +70,28 @@ impl App {
                 }
             }
         }
-        log::info!("Finish run");
+        log::debug!("Finish run");
     }
 }
 
 // output file to stdout
 fn output_file(path: &std::path::Path) {
-    log::info!("Processing file: {}", path.to_str().unwrap());
+    log::debug!("Processing file: {}", path.to_str().unwrap());
 
     // checking if file is hidden in unix (starts with . )
     match path.file_name() {
         None => {
-            log::info!("NO file name, return");
+            log::debug!("NO file name, return");
             return
         },
         Some(file_name) => match file_name.to_str() {
             None => {
-                log::info!("NO str file name, return");
+                log::debug!("NO str file name, return");
                 return
             },
             Some(name) => {
                 if name.starts_with('.') {
-                    log::info!("Hidden file, return");
+                    log::debug!("Hidden file, return");
                     return
                 }
             }
@@ -100,7 +100,7 @@ fn output_file(path: &std::path::Path) {
     // checking file extension - should be exist and supported
     match path.extension() {
         None => {
-            log::info!("NO file extension, return");
+            log::debug!("NO file extension, return");
             ()
         },
         Some(ext) => {
@@ -110,7 +110,7 @@ fn output_file(path: &std::path::Path) {
                 .position(|&supported_ext| supported_ext == ext)
             {
                 None => {
-                    log::info!("Unsupported file type, return");
+                    log::debug!("Unsupported file type, return");
                     ()
                 },
                 Some(_) => println!("{}", path.display()),

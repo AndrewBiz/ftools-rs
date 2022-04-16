@@ -48,7 +48,7 @@ fn main() {
     } else {
         env_logger::init();
     }
-    log::info!("START main");
+    log::debug!("START main");
     log::debug!("Arguments set by the user: {:?}", &cli_args);
 
     if cli_args.supported_types {
@@ -61,5 +61,5 @@ fn main() {
     let app = ftls::App::init(cli_args);
     app.run();
 
-    log::info!("FINISH main");
+    log::debug!("FINISH main");
 }

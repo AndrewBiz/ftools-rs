@@ -233,21 +233,16 @@ Feature: Generate a list of ftools-friendly-files
     And the stdout should not contain any of:
     | foto.jpg  |
 
-#  #@announce
-#  Scenario: Output produces supported-by-phtools file list keeping extentions unchanged (e.g. capitalized will remain capitalized)
-#    Given a directory named "capitalized"
-#    Given empty files named:
-#    | ./capitalized/foto.TIF  |
-#    | ./capitalized/video.DV  |
-#    | ./capitalized/video.MOV |
-#    | ./capitalized/video1.mov |
-#    When I successfully run `phls capitalized`
-#    Then the stdout should contain each of:
-#    | foto.TIF  |
-#    | video.DV  |
-#    | video.MOV |
-#    | video1.mov |
-#
+  Scenario: Output produces supported-by-phtools file list keeping extentions unchanged (e.g. capitalized will remain capitalized)
+    Given a directory named "capitalized"
+    Given empty files named:
+      | ./capitalized/foto1.JPG |
+      | ./capitalized/foto2.jpg |
+    When I successfully run `ftls capitalized`
+    Then the stdout should contain each of:
+      | foto1.JPG  |
+      | foto2.jpg  |
+
 #  #@announce
 #  Scenario: The output shows only files included in the given RANGE
 #    And empty files named:

@@ -15,19 +15,19 @@ impl App {
         for item in &args.dir_or_filemask {
             let dir = std::path::Path::new(item);
             if dir.is_dir() {
-                dirs2scan.push(dir.to_str().unwrap().to_string())
+                dirs2scan.push(dir.to_str().unwrap().to_string());
             } else {
                 file_masks.push(item.clone());
             }
         }
         // set default dir if empty
         if dirs2scan.is_empty() {
-            dirs2scan.push(String::from("."))
+            dirs2scan.push(String::from("."));
         }
         // set default mask if empty
         if file_masks.is_empty() {
-            file_masks.push(String::from("*.*"))
-        };
+            file_masks.push(String::from("*.*"));
+        }
 
         log::debug!("DIRs to be scanned: {:?}", &dirs2scan);
         log::debug!("FILEMASKs to be used: {:?}", &file_masks);

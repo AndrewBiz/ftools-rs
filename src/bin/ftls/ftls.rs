@@ -36,7 +36,7 @@ impl App {
         App {
             dirs2scan,
             file_masks,
-            recursive : args.recursive,
+            recursive: args.recursive,
         }
     }
 
@@ -82,17 +82,17 @@ fn output_file(path: &std::path::Path) {
     match path.file_name() {
         None => {
             log::debug!("NO file name, return");
-            return
-        },
+            return;
+        }
         Some(file_name) => match file_name.to_str() {
             None => {
                 log::debug!("NO str file name, return");
-                return
-            },
+                return;
+            }
             Some(name) => {
                 if name.starts_with('.') {
                     log::debug!("Hidden file, return");
-                    return
+                    return;
                 }
             }
         },
@@ -101,7 +101,7 @@ fn output_file(path: &std::path::Path) {
     match path.extension() {
         None => {
             log::debug!("NO file extension, return");
-        },
+        }
         Some(ext) => {
             let ext = ext.to_ascii_lowercase();
             match ftools::SUPPORTED_FILE_TYPE
@@ -110,7 +110,7 @@ fn output_file(path: &std::path::Path) {
             {
                 None => {
                     log::debug!("Unsupported file type, return");
-                },
+                }
                 Some(_) => println!("{}", path.display()),
             }
         }

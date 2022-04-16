@@ -44,7 +44,9 @@ pub struct CliArgs {
 fn main() {
     let cli_args = CliArgs::parse();
     if cli_args.debug {
-        env_logger::Builder::new().filter_level(log::LevelFilter::Debug).init();
+        env_logger::Builder::new()
+            .filter_level(log::LevelFilter::Debug)
+            .init();
     } else {
         env_logger::init();
     }

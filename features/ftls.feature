@@ -88,7 +88,6 @@ Feature: Generate a list of ftools-friendly-files
     And the stdout should not contain "video_wrong.xxx"
     And the stdout should not contain "file_no_ext"
 
-
   Scenario: The output shows files inside given directories
     Given a directory named "fotos1"
     And empty files named:
@@ -243,39 +242,37 @@ Feature: Generate a list of ftools-friendly-files
       | foto1.JPG  |
       | foto2.jpg  |
 
-#  #@announce
-#  Scenario: The output shows only files included in the given RANGE
-#    And empty files named:
-#    | DSC3198.jpg       |
-#    | DSC3199.jpg       |
-#    | DSC3200.jpg       |
-#    | DSC3201.jpg       |
-#    | DSC3202.jpg       |
-#    | DSC3203.jpg       |
-#    When I successfully run `phls --range '199..201'`
-#    Then the stdout should contain each of:
-#    | DSC3199.jpg       |
-#    | DSC3200.jpg       |
-#    | DSC3201.jpg       |
-#    And the stdout should not contain any of:
-#    | DSC3198.jpg       |
-#    | DSC3202.jpg       |
-#    | DSC3203.jpg       |
-#
-#  #@announce
-#  Scenario: The output shows nothing if RANGE is incorrect
-#    And empty files named:
-#    | DSC3198.jpg       |
-#    | DSC3199.jpg       |
-#    | DSC3200.jpg       |
-#    | DSC3201.jpg       |
-#    | DSC3202.jpg       |
-#    | DSC3203.jpg       |
-#    When I successfully run `phls --range '199..20'`
-#    And the stdout should not contain any of:
-#    | DSC3198.jpg       |
-#    | DSC3199.jpg       |
-#    | DSC3200.jpg       |
-#    | DSC3201.jpg       |
-#    | DSC3202.jpg       |
-#    | DSC3203.jpg       |
+  Scenario: The output shows only files included in the given RANGE
+    And empty files named:
+    | DSC3198.jpg       |
+    | DSC3199.jpg       |
+    | DSC3200.jpg       |
+    | DSC3201.jpg       |
+    | DSC3202.jpg       |
+    | DSC3203.jpg       |
+    When I successfully run `ftls --range "199..201"`
+    Then the stdout should contain each of:
+    | DSC3199.jpg       |
+    | DSC3200.jpg       |
+    | DSC3201.jpg       |
+    And the stdout should not contain any of:
+    | DSC3198.jpg       |
+    | DSC3202.jpg       |
+    | DSC3203.jpg       |
+
+  Scenario: The output shows nothing if RANGE is incorrect
+    And empty files named:
+    | DSC3198.jpg       |
+    | DSC3199.jpg       |
+    | DSC3200.jpg       |
+    | DSC3201.jpg       |
+    | DSC3202.jpg       |
+    | DSC3203.jpg       |
+    When I successfully run `ftls --range '199..20'`
+    And the stdout should not contain any of:
+    | DSC3198.jpg       |
+    | DSC3199.jpg       |
+    | DSC3200.jpg       |
+    | DSC3201.jpg       |
+    | DSC3202.jpg       |
+    | DSC3203.jpg       |

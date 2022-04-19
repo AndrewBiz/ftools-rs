@@ -31,9 +31,16 @@ pub struct CliArgs {
     /// Show supported file types
     supported_types: bool,
 
-    #[clap(short, long)]
+    #[clap(short='R', long)]
     /// Recursively scan directories
     recursive: bool,
+
+    #[clap(long, verbatim_doc_comment)]
+    /// Sets the range of filename endings to be included
+    /// into the output. Example: --range '05..07' will take
+    /// only files with the filename endings 05, 06, 07 and
+    /// will not take any other files
+    range: Option<String>,
 
     #[clap(verbatim_doc_comment)]
     /// Set DIRs to be scanned and FILEMASKs to filter files.

@@ -1,0 +1,16 @@
+﻿---
+peterburg:
+  :time_zone: "+04:00"
+  :world_region: "Europe" # XMP:LocationShownWorldRegion
+  :country: "Russia" # MWG:Country
+  :country_code: "RU" # XMP-iptcCore:CountryCode http://ru.wikipedia.org/wiki/ISO_3166-1
+  :state: "Peterburg region" # MWG:State
+  :city: "Peterburg" # MWG:City
+  :location: "Palace square" # MWG:Location
+  :gps_created:
+    :gps_latitude: "59 56 21.069" # GPSLatitude=55 deg 37' 25.37"
+    :gps_latitude_ref: "N" # GPSLatitudeRef=N' = North 'S' = South
+    :gps_longitude: "30 18 50.067" #GPSLongitude=37 deg 43' 12.75"
+    :gps_longitude_ref: "E" #GPSLongitudeRef='E' = East 'W' = West
+    :gps_altitude: "0.5" # GPSAltitude
+    :gps_altitude_ref: "Above Sea Level" # GPSAltitudeRef=Below Sea Level

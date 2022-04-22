@@ -1,0 +1,16 @@
+---
+:event:
+  :title: "title_to_be_overwritten"
+  :sort: "_01"
+  :uri: "uri_to_be_overwritten"
+  :date_start: "2013-01-02 00:00:00"
+  :date_end: "2013-01-08 23:59:59"
+  :keywords:
+    :what: ["what-to_be_added"]
+    :who: ["who-to_be_added"]
+    :where: ["where-to_be_added"]
+    :when: ["when-to_be_added"]
+    :why: ["why-to_be_added"]
+    :how: ["how-to_be_added"]
+    :method: ["method-to_be_added"]
+  :alias_place_created: peterburg_other

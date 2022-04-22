@@ -1,0 +1,16 @@
+﻿---
+peterburg_other:
+  :time_zone: "+66:00"
+  :world_region: "Asiopa"
+  :country: "Xland"
+  :country_code: "XX"
+  :state: "Xxxsheer"
+  :city: "Nsk"
+  :location: "Far market"
+  :gps_created:
+    :gps_latitude: "19 19 00"
+    :gps_latitude_ref: "N"
+    :gps_longitude: "20 20 00"
+    :gps_longitude_ref: "E"
+    :gps_altitude: "888"
+    :gps_altitude_ref: "Above Sea Level"

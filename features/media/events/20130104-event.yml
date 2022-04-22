@@ -1,0 +1,29 @@
+# Foto event profile. Attention! File code page should be UTF-8
+# Паспорт фотособытия. Внимание! Кодировка файла должна быть UTF-8
+---
+:event:
+  :title: "Baltica Travel" # Event title (mwg_coll:CollectionName)
+#  :sort: "_01" #OPTIONAL event sort order - if several subevents in one period
+  :uri: "anblab.net" # mwg-coll:CollectionURI - адрес фотки в интернете
+
+# Event period
+  :date_start: "2013-01-04 00:00:00" #YYYY-mm-dd HH:MM:SS[.ss][+/-HH:MM]
+#  :date_end: "2013-01-08 23:59:59" #YYYY-mm-dd HH:MM:SS[.ss][+/-HH:MM]
+
+  :keywords: # XMP:Subject (MWG:Keywords)
+    # Описание события (Что? Объект)
+    :what: ["круиз", "travel"]
+    # Перечень участников (Кто? Субъект)
+    :who: ["Andrew"]
+    # Описание места/мест (Где? Место)
+    :where: ["Балтийское море", "Baltic"]
+    # Описание времени (Когда? Время)
+    :when: ["день", "day"]
+    # Описание причины и цели (Почему?/Зачем? Цель/Причина)
+    :why: ["отпуск", "vacation"]
+    # Каково было?
+    :how: ["отлично", "fine"]
+    # Метод получения изображения
+    :method: ["digital photo camera"] #camera, scanner - Чем?/Как? Средство/Способ
+
+  :alias_place_created: peterburg #location_created and gps_created will be taken from locations.yml

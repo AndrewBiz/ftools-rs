@@ -1,6 +1,6 @@
-use std::ops::RangeInclusive;
 use crate::CliArgs;
 use regex::Regex;
+use std::ops::RangeInclusive;
 
 // app class
 pub struct App {
@@ -69,7 +69,7 @@ impl App {
             file_masks,
             recursive: args.recursive,
             range,
-            range_str_len
+            range_str_len,
         }
     }
 
@@ -92,7 +92,7 @@ impl App {
                 pattern.push_str(mask);
                 log::debug!("Using glob pattern: {:?}", &pattern);
                 for entry in
-                glob::glob_with(&pattern, glob_options).expect("Failed to read glob pattern")
+                    glob::glob_with(&pattern, glob_options).expect("Failed to read glob pattern")
                 {
                     match entry {
                         Ok(path) => {
@@ -132,19 +132,27 @@ impl App {
                         return;
                     }
                 }
-            }
+            },
         }
         // checking file name (without extention) if file_name corresponds to the given range
         if let Some(file_stem) = path.file_stem() {
             if let Some(name) = file_stem.to_str() {
-                if self.range_str_len >0 {
+                if self.range_str_len > 0 {
                     let name_str_len = name.len();
-                    let name_ending = &name[name_str_len - self.range_str_len .. name_str_len];
+                    let name_ending = &name[name_str_len - self.range_str_len..name_str_len];
                     if let Ok(name_ending_int) = &name_ending.parse::<i32>() {
                         if self.range.contains(name_ending_int) {
-                            log::debug!("File name ending '{}' is inside the range {:?}", &name_ending, &self.range);
+                            log::debug!(
+                                "File name ending '{}' is inside the range {:?}",
+                                &name_ending,
+                                &self.range
+                            );
                         } else {
-                            log::debug!("File name ending '{}' is OUT of the range {:?}, skip", &name_ending, &self.range);
+                            log::debug!(
+                                "File name ending '{}' is OUT of the range {:?}, skip",
+                                &name_ending,
+                                &self.range
+                            );
                             return;
                         }
                     } else {

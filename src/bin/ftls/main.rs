@@ -31,7 +31,7 @@ pub struct CliArgs {
     /// Show supported file types
     supported_types: bool,
 
-    #[clap(short='R', long)]
+    #[clap(short = 'R', long)]
     /// Recursively scan directories
     recursive: bool,
 

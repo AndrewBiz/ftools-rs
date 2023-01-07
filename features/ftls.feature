@@ -5,6 +5,7 @@ Feature: Generate a list of ftools-friendly-files
   I want to get the list of foto\video files in a form of a plain text
   (one filename by line) in stdout channel
 
+  @ftls
   Scenario: Output with -h produces usage information
     When I run `ftls -h`
     Then the stdout should contain each of:
@@ -16,10 +17,12 @@ Feature: Generate a list of ftools-friendly-files
       | -V, --version                            |
 
 
+  @ftls
   Scenario: Output with -V produces version information
     When I run `ftls -V`
     Then the output should match /[0-9]+\.[0-9]+\.[0-9]+(-[a-z,0-9]+)?/
 
+  @ftls
   Scenario: Can show which file types are supported by the command
     When I run `ftls --supported-types`
     Then the stdout should contain each of:
@@ -28,6 +31,7 @@ Feature: Generate a list of ftools-friendly-files
       | heic                |
 
 
+  @ftls
   Scenario: The command does not process hidden files
     Given empty files named:
       | foto.jpg   |
@@ -38,6 +42,7 @@ Feature: Generate a list of ftools-friendly-files
     And the stdout should not contain "._foto.jpg"
 
 
+  @ftls
   Scenario: Default output produces supported-by-ftools file list from current directory
     Given empty files named:
 #    | foto.jpeg       |
@@ -88,6 +93,7 @@ Feature: Generate a list of ftools-friendly-files
     And the stdout should not contain "video_wrong.xxx"
     And the stdout should not contain "file_no_ext"
 
+  @ftls
   Scenario: The output shows files inside given directories
     Given a directory named "fotos1"
     And empty files named:
@@ -113,6 +119,7 @@ Feature: Generate a list of ftools-friendly-files
       | fotos2/f4.jpg |
 
 
+  @ftls
   Scenario: Output produces file list filtered with given masks from current directory
     Given empty files named:
       | foto1_yes_.jpg |
@@ -132,6 +139,7 @@ Feature: Generate a list of ftools-friendly-files
       | ok-foto6.heic |
 
 
+  @ftls
   Scenario: The output shows files inside directories and subdirectories if run recursive
     Given a directory named "fotos"
     And empty files named:
@@ -148,6 +156,7 @@ Feature: Generate a list of ftools-friendly-files
       | fotos/fotos2/f2.jpg        |
       | fotos/fotos2/fotos3/f3.jpg |
 
+  @ftls
   Scenario: The output DOES NOT show unsupported files EVEN if I intentionally enter it as a parameter
     Given empty files named:
     | foto_wrong.psd  |
@@ -156,6 +165,7 @@ Feature: Generate a list of ftools-friendly-files
     Then the stdout should not contain "foto_wrong.psd"
     And  the stdout should not contain "video_wrong.xxx"
 
+  @ftls
   Scenario: The output shows files only inside directories entered as paramenets and not files outside
     Given a directory named "fotos"
     And empty files named:
@@ -186,6 +196,7 @@ Feature: Generate a list of ftools-friendly-files
       | foto_wrong1.jpg |
       | foto_wrong2.jpg |
 
+  @ftls
   Scenario: The output DOES NOT show usupported files inside directories entered as paramenets
     Given a directory named "fotos"
     And empty files named:
@@ -197,6 +208,7 @@ Feature: Generate a list of ftools-friendly-files
     Then the stdout should not contain "fotos/f5_wrong.ppp"
     And  the stdout should not contain "videos/v5_wrong.vvv"
 
+  @ftls
   Scenario: Output produces file list filtered with given masks from given directories
     Given a directory named "fotos"
     And empty files named:
@@ -220,6 +232,7 @@ Feature: Generate a list of ftools-friendly-files
       | fotos/foto1_no.jpg  |
       | fotos/foto1_no.heic |
 
+  @ftls
   Scenario: The output shows only files, no folders (even if folder name looks like a file)
     Given a directory named "foto.jpg"
     And empty files named:
@@ -232,6 +245,7 @@ Feature: Generate a list of ftools-friendly-files
     And the stdout should not contain any of:
     | foto.jpg  |
 
+  @ftls
   Scenario: Output produces supported-by-phtools file list keeping extentions unchanged (e.g. capitalized will remain capitalized)
     Given a directory named "capitalized"
     Given empty files named:
@@ -242,6 +256,7 @@ Feature: Generate a list of ftools-friendly-files
       | foto1.JPG  |
       | foto2.jpg  |
 
+  @ftls
   Scenario: The output shows only files included in the given RANGE
     And empty files named:
     | DSC3198.jpg       |
@@ -260,6 +275,7 @@ Feature: Generate a list of ftools-friendly-files
     | DSC3202.jpg       |
     | DSC3203.jpg       |
 
+  @ftls
   Scenario: The output shows nothing if RANGE is incorrect
     And empty files named:
     | DSC3198.jpg       |

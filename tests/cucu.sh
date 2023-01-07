@@ -1,4 +1,6 @@
-RUST_EXE="/target/debug"
-PATH=$PWD$RUST_EXE:$PATH
+RUST_EXE=$PWD"/target/debug"
+FEATURES=$PWD"/features"
+PATH=$RUST_EXE:$FEATURES:$PATH
 #echo $PATH
-cucumber
+# cucumber -f progress summary -msi $@
+cucumber -f progress $@

@@ -8,26 +8,35 @@ Given(/^empty files named:$/) do |table|
   end
 end
 
-# Given(/^example file "(.*?)" copied to "(.*?)"$/) do |arg1, arg2|
-#   basename = File.basename(arg1)
-#   file_out = File.join(expand_path('.'), arg2, basename)
-#   FileUtils.cp(arg1, file_out, preserve: true)
-# end
-#
+# ParameterType(
+#   name:        'source_folder',
+#   regexp:      /(.*?)/,
+#   type:        SourceFolder,
+#   # The transformer takes as many arguments as there are capture groups in the regexp,
+#   # or just one if there are none.
+#   transformer: ->(s) { SourceFolder.new(s) }
+# )
+
+Given(/^example file "(.*?)" copied to "(.*?)"$/) do |file_in, target_folder|
+  basename = File.basename(file_in)
+  file_out = File.join(expand_path('.'), target_folder, basename)
+  FileUtils.cp(file_in, file_out, preserve: true)
+end
+
 # Given(/^example file "(.*?)" copied to file "(.*?)"$/) do |arg1, arg2|
 #   file_out = File.join(expand_path('.'), arg2)
 #   FileUtils.cp(arg1, file_out, preserve: true)
 # end
 #
-# Given(/^example files from "(.*?)" copied to "(.*?)" named:$/) do |arg1, arg2, table|
-#   # table is a Cucumber::Ast::Table
-#   files = table.raw.flatten
-#   files.each do |file|
-#     file_in = File.join(arg1, file)
-#     step %(example file "#{file_in}" copied to "#{arg2}")
-#   end
-# end
-#
+Given(/^example files from "(.*?)" copied to "(.*?)" named:$/) do |source_folder, target_folder, table|
+  # table is a Cucumber::Ast::Table
+  files = table.raw.flatten
+  files.each do |file|
+    file_in = File.join(source_folder, file)
+    step %(example file "#{file_in}" copied to "#{target_folder}")
+  end
+end
+
 # Given(/^example file "([^"]*)" with file\-modify\-date set to "([^"]*)"$/) do |arg1, arg2|
 #   fmd = Time.parse(arg2)
 #   File.utime(fmd, fmd, File.join(expand_path('.'), arg1))

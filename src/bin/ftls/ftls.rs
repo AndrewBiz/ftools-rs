@@ -183,6 +183,8 @@ impl App {
                     None => {
                         log::debug!("Unsupported file type, skip");
                     }
+                    // TODO! see https://stackoverflow.com/questions/65755853/simple-word-count-rust-program-outputs-valid-stdout-but-panicks-when-piped-to-he
+                    //
                     Some(_) => println!("{}", path.display()),
                 }
             }

@@ -1,3 +1,4 @@
+#![feature(unix_sigpipe)]
 mod ftls;
 
 // command options and arguments
@@ -46,6 +47,7 @@ pub struct CliArgs {
     dir_or_filemask: Vec<String>,
 }
 
+#[unix_sigpipe = "sig_dfl"]
 fn main() {
     let cli_args = CliArgs::parse();
     if cli_args.debug {

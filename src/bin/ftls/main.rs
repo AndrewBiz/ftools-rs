@@ -17,9 +17,7 @@ use clap::Parser;
 /// from STDIN, it generates list of files based on input parameters and sends it
 /// to STDOUT. The command is intended to be used with other programs
 /// connected via pipes as a 1st command in the pipe chain, e.g.:
-/// ```
 ///    ftls abc 'IMG_*.jpg' | ftrename -a anb
-/// ```
 /// => scans 'abc' folder and sends all found IMG_*.jpg files to ftrename command
 
 pub struct CliArgs {

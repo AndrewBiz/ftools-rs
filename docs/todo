@@ -1,17 +1,32 @@
 ftls:
 TODO! fix broken pipe issue: https://github.com/rust-lang/rust/issues/97889 https://github.com/rust-lang/rust/issues/46016
 
+TODO! 
+fn main() -> ExitCode {
+    match run() {
+      Err(Error::IOError(err)) if err.kind() == io::ErrorKind::BrokenPipe => {
+        // Okay, this happens when the output is piped to a program like `head`
+        ExitCode::SUCCESS
+      }
+      Err(err) => {
+        eprintln!("{}", err).ok();
+        ExitCode::FAILURE
+      }
+      Ok(_) => ExitCode::SUCCESS,
+    }
+  }
+
 TODO! writeln! instead of println!
 let stdout = io::stdout();
 let mut stdout = stdout.lock();
 while let Some(entry) = stack.pop() {
-writeln!(stdout, "{}\t{}", entry.count, entry.word)?;
+    writeln!(stdout, "{}\t{}", entry.count, entry.word)?;
 }
 
 ftrename:
 TODO! https://stackoverflow.com/questions/65755853/simple-word-count-rust-program-outputs-valid-stdout-but-panicks-when-piped-to-he
 let stdin = io::stdin();
 for result in stdin.lock().lines() {
-let line = result?;
-line_processor(line, &mut words)
+    let line = result?;
+    line_processor(line, &mut words)
 }

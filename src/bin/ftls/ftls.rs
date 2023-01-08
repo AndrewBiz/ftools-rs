@@ -1,5 +1,6 @@
 use crate::CliArgs;
 use regex::Regex;
+use std::io::Write;
 use std::ops::RangeInclusive;
 
 // app class
@@ -91,8 +92,7 @@ impl App {
                 }
                 pattern.push_str(mask);
                 log::debug!("Using glob pattern: {:?}", &pattern);
-                for entry in
-                    glob::glob_with(&pattern, glob_options).expect("Failed to read glob pattern")
+                for entry in glob::glob_with(&pattern, glob_options).expect("Reading glob pattern")
                 {
                     match entry {
                         Ok(path) => {
@@ -183,9 +183,12 @@ impl App {
                     None => {
                         log::debug!("Unsupported file type, skip");
                     }
-                    // TODO! see https://stackoverflow.com/questions/65755853/simple-word-count-rust-program-outputs-valid-stdout-but-panicks-when-piped-to-he
-                    //
-                    Some(_) => println!("{}", path.display()),
+                    Some(_) => {
+                        // opening stdout
+                        let stdout = std::io::stdout();
+                        let mut stdout = stdout.lock();
+                        writeln!(stdout, "{}", path.display()).unwrap_or_default()
+                    }
                 }
             }
         }

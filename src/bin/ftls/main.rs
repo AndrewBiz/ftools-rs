@@ -44,13 +44,13 @@ pub struct CliArgs {
 
     #[clap(verbatim_doc_comment)]
     /// Set DIRs to be scanned and FILEMASKs to filter files.
-    /// Empty value is treated as if user set `ftls . '*.*'`
+    /// Empty value is treated as if the user sets `ftls . '*.*'`
     dir_or_filemask: Vec<String>,
 }
 
 #[unix_sigpipe = "sig_dfl"]
 fn main() {
-    let cli_args = CliArgs::parse();
+    let cli_args = CliArgs::parse(); // TODO try_parse - to capture --help and --version events
     if cli_args.debug {
         env_logger::Builder::new()
             .filter_level(log::LevelFilter::Debug)

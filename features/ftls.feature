@@ -10,8 +10,8 @@ Feature: Generate a list of ftools-friendly-files
     When I run `ftls -h`
     Then the stdout should contain each of:
       | *Keep Your Media Files In Order* (c) ANB |
-      | USAGE:                                   |
-      | OPTIONS:                                 |
+      | Usage:                                   |
+      | Options:                                 |
       | -h, --help                               |
       | --debug                                  |
       | -V, --version                            |

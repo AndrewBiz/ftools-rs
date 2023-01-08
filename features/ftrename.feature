@@ -10,8 +10,8 @@ Feature: Rename photo and video files
     When I successfully run `ftrename -h`
     Then the stdout should contain each of:
       | *Keep Your Media Files In Order* (c) ANB |
-      | USAGE:                                   |
-      | OPTIONS:                                 |
+      | Usage:                                   |
+      | Options:                                 |
       | -h, --help                               |
       | --debug                                  |
       | -V, --version                            |

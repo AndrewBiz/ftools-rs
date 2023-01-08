@@ -23,7 +23,7 @@ use clap::Parser;
 /// The program is designed to be safe to re-run on the same file several times
 /// - every re-run produces the same result (idempotent behaviour).
 /// Once the file was renamed to Standard Name, the date-time kept in the name
-/// is considered as a master date-time of the photo creation and will not be
+/// is considered as a master date-time of the content creation and will not be
 /// changed by re-running ftrename unless user explicitly sets correspondig option.
 /// This program uses external utility ExifTool created by Phil Harvey
 /// (http://www.sno.phy.queensu.ca/~phil/exiftool/).

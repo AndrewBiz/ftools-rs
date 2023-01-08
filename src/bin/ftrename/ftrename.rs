@@ -1,4 +1,5 @@
 use crate::CliArgs;
+use atty::Stream;
 use std::io::{BufRead, Write};
 
 // app class
@@ -14,7 +15,10 @@ impl App {
 
     pub fn run(&self) {
         log::debug!("Start run");
-
+        // if program is run in terminal - quit
+        if atty::is(Stream::Stdin) {
+            return;
+        }
         let stdin = std::io::stdin();
         for line in stdin.lock().lines() {
             match line {

@@ -1,5 +1,5 @@
 use crate::CliArgs;
-use std::io;
+use std::io::{BufRead, Write};
 
 // app class
 pub struct App {}
@@ -14,30 +14,20 @@ impl App {
 
     pub fn run(&self) {
         log::debug!("Start run");
-        // TODO! https://stackoverflow.com/questions/65755853/simple-word-count-rust-program-outputs-valid-stdout-but-panicks-when-piped-to-he
-        // let stdin = io::stdin();
-        // for result in stdin.lock().lines() {
-        //     let line = result?;
-        //     line_processor(line, &mut words)
-        // }
-        let mut input = String::new();
-        let stdin = io::stdin();
-        match stdin.read_line(&mut input) {
-            Ok(n) => {
-                println!("bytes read {n}");
-                println!("line read: {input}")
+
+        let stdin = std::io::stdin();
+        for line in stdin.lock().lines() {
+            match line {
+                Ok(line) => self.output_to_stdout(&line),
+                Err(e) => eprintln!("ERROR in stdin: {:?}", e),
             }
-            Err(e) => println!("error! - {e}"),
         }
-        // let lines = io::stdin().lines();
-        // for line in lines {
-        //     match line {
-        //         Ok(line) => eprintln!("got a line: {}", line),
-        //         Err(e) => eprintln!("ERROR in stdin: {:?}", e),
-        //     }
-        // }
         log::debug!("Finish run");
     }
-
     // output file to stdout
+    fn output_to_stdout(&self, line: &String) {
+        let stdout = std::io::stdout();
+        let mut stdout = stdout.lock();
+        writeln!(stdout, "{}", line).unwrap_or_default()
+    }
 }

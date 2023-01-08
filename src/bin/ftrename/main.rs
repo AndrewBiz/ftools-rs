@@ -1,3 +1,5 @@
+#![feature(unix_sigpipe)]
+
 mod ftrename;
 
 // command options and arguments
@@ -32,6 +34,7 @@ pub struct CliArgs {
     debug: bool,
 }
 
+#[unix_sigpipe = "sig_dfl"]
 fn main() {
     let cli_args = CliArgs::parse();
     if cli_args.debug {

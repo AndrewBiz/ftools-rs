@@ -1,5 +1,7 @@
 #![feature(unix_sigpipe)]
 
+use anyhow::Result;
+
 mod ftrename;
 
 // command options and arguments
@@ -35,8 +37,9 @@ pub struct CliArgs {
 }
 
 #[unix_sigpipe = "sig_dfl"]
-fn main() {
+fn main() -> Result<()> {
     let cli_args = CliArgs::parse();
+
     if cli_args.debug {
         env_logger::Builder::new()
             .filter_level(log::LevelFilter::Debug)
@@ -51,4 +54,5 @@ fn main() {
     app.run();
 
     log::debug!("FINISH main");
+    Ok(())
 }

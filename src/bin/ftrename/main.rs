@@ -1,5 +1,4 @@
 #![feature(unix_sigpipe)]
-
 use anyhow::Result;
 
 mod ftrename;

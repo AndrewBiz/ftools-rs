@@ -96,7 +96,7 @@ impl App {
                 {
                     match entry {
                         Ok(path) => {
-                            self.output_file(&path);
+                            self.process_file(&path);
                         }
                         Err(e) => eprintln!("ERROR {:?}", e),
                     }
@@ -106,8 +106,8 @@ impl App {
         log::debug!("Finish run");
     }
 
-    // output file to stdout
-    fn output_file(&self, path: &std::path::Path) {
+    // process and output file to stdout
+    fn process_file(&self, path: &std::path::Path) {
         log::debug!("Processing file: {}", path.to_str().unwrap());
         // checking if the pth is dir
         if path.is_dir() {
@@ -183,12 +183,7 @@ impl App {
                     None => {
                         log::debug!("Unsupported file type, skip");
                     }
-                    Some(_) => {
-                        // opening stdout
-                        let stdout = std::io::stdout();
-                        let mut stdout = stdout.lock();
-                        writeln!(stdout, "{}", path.display()).unwrap_or_default()
-                    }
+                    Some(_) => ftools::output_to_stdout(&format!("{}", path.display())),
                 }
             }
         }

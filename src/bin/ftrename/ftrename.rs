@@ -1,6 +1,6 @@
 use crate::CliArgs;
 use atty::Stream;
-use std::io::{BufRead, Write};
+use std::io::BufRead;
 
 // app class
 pub struct App {}
@@ -22,16 +22,10 @@ impl App {
         let stdin = std::io::stdin();
         for line in stdin.lock().lines() {
             match line {
-                Ok(line) => self.output_to_stdout(&line),
+                Ok(line) => ftools::output_to_stdout(&line),
                 Err(e) => eprintln!("ERROR in stdin: {:?}", e),
             }
         }
         log::debug!("Finish run");
-    }
-    // output file to stdout
-    fn output_to_stdout(&self, line: &String) {
-        let stdout = std::io::stdout();
-        let mut stdout = stdout.lock();
-        writeln!(stdout, "{}", line).unwrap_or_default()
     }
 }

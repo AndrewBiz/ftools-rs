@@ -1,6 +1,5 @@
 use crate::CliArgs;
 use regex::Regex;
-use std::io::Write;
 use std::ops::RangeInclusive;
 
 // app class

@@ -1,5 +1,5 @@
 #![feature(unix_sigpipe)]
-use anyhow::Result;
+use anyhow::{Context, Result};
 
 mod ftrename;
 
@@ -33,6 +33,11 @@ pub struct CliArgs {
     #[clap(long)]
     /// Show debug information
     debug: bool,
+
+    // TODO! - validation via #[arg(value_parser = valid_autor)]
+    #[clap(long, short = 'a', verbatim_doc_comment)]
+    /// Sets the author nickname. The nickname should be 3 ASCII chars long (e.g. ANB)
+    author: Option<String>,
 }
 
 #[unix_sigpipe = "sig_dfl"]
@@ -50,7 +55,7 @@ fn main() -> Result<()> {
     log::debug!("Arguments set by the user: {:?}", &cli_args);
 
     let app = ftrename::App::init(cli_args);
-    app.run();
+    app.run().context("Running ftrename")?;
 
     log::debug!("FINISH main");
     Ok(())

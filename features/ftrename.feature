@@ -21,32 +21,8 @@ Feature: Rename photo and video files
     When I run `ftrename -V`
     Then the output should match /[0-9]+\.[0-9]+\.[0-9]+(-[a-z,0-9]+)?/
 
-  @ftrename
-  Scenario: TMP TMP Originally named files are renamed to phtools standard name
-    Given a directory named "rename1"
-    And example files from "features/media/sony_jpg" copied to "rename1" named:
-   | DSC03403.JPG |
-   | DSC03313.JPG |
-   | DSC03499.JPG |
-   | DSC03802.JPG |
-   | DSC04032.JPG |
-
-    When I cd to "rename1"
-    When I run the following commands:
-    """bash
-    ftls | ftrename
-    """
-    Then the exit status should be 0
-
-    Then the stdout should contain each of:
-    | DSC03313.JPG |
-    | DSC03403.JPG |
-    | DSC03499.JPG |
-    | DSC03802.JPG |
-    | DSC04032.JPG |
-
   # @ftrename
-  # Scenario: Originally named files are renamed to phtools standard name
+  # Scenario: TMP TMP Originally named files are renamed to phtools standard name
   #   Given a directory named "rename1"
   #   And example files from "features/media/sony_jpg" copied to "rename1" named:
   #  | DSC03403.JPG |
@@ -58,28 +34,52 @@ Feature: Rename photo and video files
   #   When I cd to "rename1"
   #   When I run the following commands:
   #   """bash
-  #   ftls | ftrename -a anb
+  #   ftls | ftrename
   #   """
   #   Then the exit status should be 0
 
   #   Then the stdout should contain each of:
-  #   | 20130103-103254_ANB DSC03313.JPG |
-  #   | 20130103-153908_ANB DSC03403.JPG |
-  #   | 20130104-120745_ANB DSC03499.JPG |
-  #   | 20130105-150446_ANB DSC03802.JPG |
-  #   | 20130107-115201_ANB DSC04032.JPG |
-  #   And the following files should exist:
-  #   | ./20130103-103254_ANB DSC03313.JPG |
-  #   | ./20130103-153908_ANB DSC03403.JPG |
-  #   | ./20130104-120745_ANB DSC03499.JPG |
-  #   | ./20130105-150446_ANB DSC03802.JPG |
-  #   | ./20130107-115201_ANB DSC04032.JPG |
-  #   And the following files should not exist:
-  #   | ./DSC03313.JPG |
-  #   | ./DSC03403.JPG |
-  #   | ./DSC03499.JPG |
-  #   | ./DSC03802.JPG |
-  #   | ./DSC04032.JPG |
+  #   | DSC03313.JPG |
+  #   | DSC03403.JPG |
+  #   | DSC03499.JPG |
+  #   | DSC03802.JPG |
+  #   | DSC04032.JPG |
+
+  @ftrename
+  Scenario: Originally named files are renamed to phtools standard name
+    Given a directory named "rename1"
+    And example files from "features/media/sony_jpg" copied to "rename1" named:
+   | DSC03403.JPG |
+   | DSC03313.JPG |
+   | DSC03499.JPG |
+   | DSC03802.JPG |
+   | DSC04032.JPG |
+
+    When I cd to "rename1"
+    When I run the following commands:
+    """bash
+    ftls | ftrename -a anb
+    """
+    Then the exit status should be 0
+
+    Then the stdout should contain each of:
+    | 20130103-103254_ANB DSC03313.JPG |
+    | 20130103-153908_ANB DSC03403.JPG |
+    | 20130104-120745_ANB DSC03499.JPG |
+    | 20130105-150446_ANB DSC03802.JPG |
+    | 20130107-115201_ANB DSC04032.JPG |
+    And the following files should exist:
+    | ./20130103-103254_ANB DSC03313.JPG |
+    | ./20130103-153908_ANB DSC03403.JPG |
+    | ./20130104-120745_ANB DSC03499.JPG |
+    | ./20130105-150446_ANB DSC03802.JPG |
+    | ./20130107-115201_ANB DSC04032.JPG |
+    And the following files should not exist:
+    | ./DSC03313.JPG |
+    | ./DSC03403.JPG |
+    | ./DSC03499.JPG |
+    | ./DSC03802.JPG |
+    | ./DSC04032.JPG |
 
   # #@announce
   # Scenario: Originally named files are renamed to phtools standard name using as a timestamp the 1st non-zero value of one of the tags (in priority order): EXIF:DateTimeOriginal -> IPTC:DateCreated + IPTC:TimeCreated -> XMP:DateCreated -> EXIF:CreateDate -> XMP:CreateDate -> IPTC:DigitalCreationDate + IPTC:DigitalCreationTime -> FileModifyDate

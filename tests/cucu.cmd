@@ -1,2 +1,2 @@
 path G:\Github\ftools-rs\target\debug;%PATH%
-cucumber
+cucumber -f progress

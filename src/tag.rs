@@ -1,3 +1,4 @@
+use anyhow::{anyhow, Result};
 use chrono::{DateTime, Local, NaiveDateTime};
 use serde_json::Value;
 use std::fmt;
@@ -11,64 +12,68 @@ pub struct TagDateTime {
     value: NaiveDateTime,
 }
 pub trait TagReader: fmt::Debug {
-    fn date_of_creation(&self, fs_path: &PathBuf) -> Result<TagDateTime, MyError>;
+    fn date_of_creation(&self, fs_path: &PathBuf) -> Result<TagDateTime>;
 
-    // fn read_tags_via_exiftool(
-    //     &self,
-    //     fs_path: &PathBuf,
-    //     tags_to_read: &[String],
-    // ) -> Result<TagDateTime, MyError> {
-    // println!("...trying tag reader exiftool...");
+    /// exiftool
+    fn read_tags_via_exiftool(
+        &self,
+        fs_path: &PathBuf,
+        tags_to_read: &[String],
+    ) -> Result<TagDateTime> {
+        log::debug!("Trying exiftool engine");
 
-    // // constructing external command execution
-    // let mut command = Command::new("exiftool");
-    // command.arg("-json");
-    // for tag in tags_to_read.iter() {
-    //     command.arg(format!("-{tag}"));
-    // }
-    // command.arg(fs_path);
+        // constructing external command execution
+        let mut command = Command::new("exiftool");
+        command.arg("-json");
+        for tag in tags_to_read.iter() {
+            command.arg(format!("-{tag}"));
+        }
+        command.arg(fs_path);
 
-    // // Executing command
-    // let output = match command.output() {
-    //     Ok(output) => output,
-    //     Err(e) => {
-    //         return Err(MyError::SmthGoesWrong(format!(
-    //             "exiftool ERROR: {} - reading tag in {:?}",
-    //             e, &fs_path
-    //         )))
-    //     }
-    // };
-    // let json_raw = String::from_utf8(output.stdout).unwrap_or_default();
-    // println!("JSON raw = {json_raw}");
-    // let json: Value = serde_json::from_str(&json_raw).unwrap_or_default();
+        // Executing command
+        let output = match command.output() {
+            Ok(output) => output,
+            Err(e) => {
+                return Err(anyhow!(
+                    "exiftool ERROR: {} - reading tag in {:?}",
+                    e,
+                    &fs_path
+                ))
+            }
+        };
+        let json_raw = String::from_utf8(output.stdout).unwrap_or_default();
+        println!("JSON raw = {json_raw}"); /* TODO! via log */
 
-    // for tag in tags_to_read.iter() {
-    //     let tag_value = json[0][tag].as_str().unwrap_or_default();
-    //     if tag_value == "" {
-    //         continue;
-    //     };
-    //     match NaiveDateTime::parse_from_str(&tag_value[..19], "%Y:%m:%d %H:%M:%S") {
-    //         Ok(value) => {
-    //             return Ok(TagDateTime {
-    //                 name: String::from(tag),
-    //                 reader: String::from("exiftool"),
-    //                 value_raw: String::from(tag_value),
-    //                 value,
-    //             })
-    //         }
-    //         Err(e) => {
-    //             println!("PARSE ERROR: {e}");
-    //             continue;
-    //         }
-    //     }
-    // }
-    // return Err(MyError::SmthGoesWrong(format!(
-    //     "exiftool ERROR - reading tag in {:?} - no tags found",
-    //     &fs_path
-    // )));
-    // }
+        let json: Value = serde_json::from_str(&json_raw).unwrap_or_default();
 
-    fn read_tags_via_quickexif(&self, fs_path: &PathBuf) -> Result<TagDateTime, MyError> {
+        for tag in tags_to_read.iter() {
+            let tag_value = json[0][tag].as_str().unwrap_or_default();
+            if tag_value == "" {
+                continue;
+            };
+            match NaiveDateTime::parse_from_str(&tag_value[..19], "%Y:%m:%d %H:%M:%S") {
+                Ok(value) => {
+                    return Ok(TagDateTime {
+                        name: String::from(tag),
+                        reader: String::from("exiftool"),
+                        value_raw: String::from(tag_value),
+                        value,
+                    })
+                }
+                Err(e) => {
+                    println!("PARSE ERROR: {e}"); /* TODO! via eprint*/
+                    continue;
+                }
+            }
+        }
+        return Err(anyhow!(
+            "exiftool ERROR - reading tag in {:?} - no tags found",
+            &fs_path
+        ));
+    }
+
+    /// quickexif
+    fn read_tags_via_quickexif(&self, fs_path: &PathBuf) -> Result<TagDateTime> {
         let rule = quickexif::describe_rule!(
             tiff {
                 0x8769 {
@@ -76,7 +81,7 @@ pub trait TagReader: fmt::Debug {
                 }
             }
         );
-        println!("...trying tag reader quickexif...");
+        log::debug!("Trying quickexif engine");
         let sample = std::fs::read(fs_path).unwrap_or_default();
         let sample = match sample[..4] {
             // jpeg jfif
@@ -103,16 +108,17 @@ pub trait TagReader: fmt::Debug {
                 });
             }
             Err(e) => {
-                return Err(MyError::SmthGoesWrong(format!(
+                return Err(anyhow!(
                     "qiuickexif ERROR: {} - reading tag in {:?}",
-                    e, &fs_path
-                )))
+                    e,
+                    &fs_path
+                ))
             }
         }
     }
 
     /// reading date_time_modified metadata from file system
-    fn read_fmd(&self, fs_path: &PathBuf) -> Result<TagDateTime, MyError> {
+    fn read_fmd(&self, fs_path: &PathBuf) -> Result<TagDateTime> {
         let mut dt_created = TagDateTime {
             name: String::from("FileModifiedDate"),
             reader: String::from("fs_metadata"),
@@ -128,17 +134,18 @@ pub trait TagReader: fmt::Debug {
                     let value = fmd_dtl.naive_local();
                     dt_created.value = value;
                 } else {
-                    return Err(MyError::SmthGoesWrong(format!(
+                    return Err(anyhow!(
                         "fs_metadata ERROR: file_modify_date not supported on this platform - reading tag in {:?}",
                         &fs_path
-                    )));
+                    ));
                 }
             }
             Err(e) => {
-                return Err(MyError::SmthGoesWrong(format!(
+                return Err(anyhow!(
                     "fs_metadata ERROR: {} - reading tag in {:?}",
-                    e, &fs_path
-                )))
+                    e,
+                    &fs_path
+                ))
             }
         }
         Ok(dt_created)

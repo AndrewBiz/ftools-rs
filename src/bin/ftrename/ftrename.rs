@@ -1,7 +1,7 @@
 use crate::CliArgs;
-use anyhow::{anyhow, Context, Result};
+use anyhow::{anyhow, Result};
 use atty::Stream;
-use std::{any, io::BufRead};
+use std::io::BufRead;
 
 // app class
 pub struct App {
@@ -44,10 +44,12 @@ impl App {
 
     pub fn process_file(&self, in_fn: &String) -> Result<String> {
         let out_fn = in_fn.clone();
+
         // 1 init MediaFile
+        let mf = ftools::media_file::init(out_fn.into(), self.author.clone());
         // 2 Read DT tag, prep new name
         // 3 Rename file
-        Ok(out_fn)
+        Ok(mf.get_file_name())
         // Err(anyhow!("tralalalalalalal"))
     }
 }

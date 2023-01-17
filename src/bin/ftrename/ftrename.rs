@@ -43,13 +43,11 @@ impl App {
     }
 
     pub fn process_file(&self, in_fn: &String) -> Result<String> {
-        let out_fn = in_fn.clone();
-
+        log::debug!("Processing {}", in_fn);
         // 1 init MediaFile
-        let mf = ftools::media_file::init(out_fn.into(), self.author.clone());
+        let mf = ftools::media_file::init(in_fn.clone(), self.author.clone())?;
         // 2 Read DT tag, prep new name
         // 3 Rename file
         Ok(mf.get_file_name())
-        // Err(anyhow!("tralalalalalalal"))
     }
 }

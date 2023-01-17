@@ -1,4 +1,5 @@
 use crate::tag::{TagDateTime, TagReader};
+use anyhow::{anyhow, Result};
 use std::path::PathBuf;
 
 pub mod jpg;
@@ -13,24 +14,14 @@ pub struct MediaFile {
 }
 
 impl MediaFile {
-    fn new(fs_path: PathBuf, media_type: Box<dyn TagReader>, author: String) -> Self {
-        match media_type.date_of_creation(&fs_path) {
-            Ok(dt_created) => Self {
-                fs_path,
-                media_type,
-                dt_created,
-                author,
-            },
-            Err(e) => {
-                eprintln!("MediaFile::new() - {}", e);
-                Self {
-                    fs_path,
-                    media_type,
-                    dt_created: TagDateTime::default(),
-                    author,
-                }
-            }
-        }
+    fn new(fs_path: PathBuf, media_type: Box<dyn TagReader>, author: String) -> Result<Self> {
+        let dt_created = media_type.date_of_creation(&fs_path)?;
+        Ok(Self {
+            fs_path,
+            media_type,
+            dt_created,
+            author,
+        })
     }
 
     pub fn get_file_name(&self) -> String {
@@ -38,19 +29,21 @@ impl MediaFile {
     }
 }
 
-pub fn init(fs_path: PathBuf, author: String) -> MediaFile {
-    if let Some(fs_ext) = fs_path.extension() {
-        let file_ext = fs_ext.to_str().unwrap_or("").to_lowercase();
-        let file_ext = file_ext.as_str();
-        match file_ext {
-            "jpg" | "jpeg" => MediaFile::new(fs_path, Box::new(jpg::Jpg), author),
-            // "heic" => MediaFile::new(fs_path, Box::new(heic::Heic)),
-            // "arw" => MediaFile::new(fs_path, Box::new(arw::Arw)),
-            // "mov" => MediaFile::new(fs_path, Box::new(mov::Mov)),
-            // "png" => media_file::process(&fs_path, Png),
-            _ => MediaFile::new(fs_path, Box::new(unsupported::Unsupported), author),
-        }
-    } else {
-        MediaFile::new(fs_path, Box::new(unsupported::Unsupported), author)
+pub fn init(path: String, author: String) -> Result<MediaFile> {
+    let fs_path: PathBuf = path.into();
+    if !fs_path.is_file() {
+        return Err(anyhow!("Not a file or file does not exist"));
     }
+    let fs_ext = fs_path.extension().ok_or(anyhow!("No file extention"))?;
+    let file_ext = fs_ext.to_str().unwrap_or("").to_lowercase();
+    let file_ext = file_ext.as_str();
+    let mf = match file_ext {
+        "jpg" | "jpeg" => MediaFile::new(fs_path, Box::new(jpg::Jpg), author),
+        // "heic" => MediaFile::new(fs_path, Box::new(heic::Heic)),
+        // "arw" => MediaFile::new(fs_path, Box::new(arw::Arw)),
+        // "mov" => MediaFile::new(fs_path, Box::new(mov::Mov)),
+        // "png" => media_file::process(&fs_path, Png),
+        _ => MediaFile::new(fs_path, Box::new(unsupported::Unsupported), author),
+    }?;
+    Ok(mf)
 }

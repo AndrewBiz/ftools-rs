@@ -1,3 +1,6 @@
+# usage: 
+#    tests/cucu.sh
+#    tests/cucu.sh -t @ftrename
 RUST_EXE=$PWD"/target/debug"
 FEATURES=$PWD"/features"
 PATH=$RUST_EXE:$FEATURES:$PATH

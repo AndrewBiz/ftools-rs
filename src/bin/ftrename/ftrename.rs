@@ -46,8 +46,10 @@ impl App {
         log::debug!("Processing {}", in_fn);
         // 1 init MediaFile
         let mf = ftools::media_file::init(in_fn.clone(), self.author.clone())?;
+        log::debug!("MediaFile read: {:?}", mf);
+        log::debug!("!!! standard name={}", mf.get_standard_file_name());
         // 2 Read DT tag, prep new name
         // 3 Rename file
-        Ok(mf.get_file_name())
+        Ok(mf.file_name)
     }
 }

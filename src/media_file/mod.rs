@@ -8,24 +8,38 @@ pub mod unsupported;
 #[derive(Debug)]
 pub struct MediaFile {
     pub fs_path: PathBuf,
+    pub file_name: String,
     pub media_type: Box<dyn TagReader>,
     pub dt_created: TagDateTime,
-    author: String,
+    pub author: String,
 }
 
 impl MediaFile {
     fn new(fs_path: PathBuf, media_type: Box<dyn TagReader>, author: String) -> Result<Self> {
         let dt_created = media_type.date_of_creation(&fs_path)?;
         Ok(Self {
+            file_name: format!(
+                "{}",
+                fs_path
+                    .as_path()
+                    .file_name()
+                    .unwrap_or_default()
+                    .to_str()
+                    .unwrap_or_default()
+            ),
             fs_path,
             media_type,
             dt_created,
             author,
         })
     }
-
-    pub fn get_file_name(&self) -> String {
-        format!("{}", self.fs_path.as_path().display())
+    pub fn get_standard_file_name(&self) -> String {
+        format!(
+            "{}_{} {}",
+            self.dt_created.value.format("%Y%m%d-%H%M%S"),
+            self.author,
+            self.file_name
+        )
     }
 }
 

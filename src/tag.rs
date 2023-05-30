@@ -9,7 +9,7 @@ pub struct TagDateTime {
     name: String,
     reader: String,
     value_raw: String,
-    value: NaiveDateTime,
+    pub value: NaiveDateTime,
 }
 pub trait TagReader: fmt::Debug {
     fn date_of_creation(&self, fs_path: &PathBuf) -> Result<TagDateTime>;

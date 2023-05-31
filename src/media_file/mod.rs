@@ -8,7 +8,9 @@ pub mod unsupported;
 #[derive(Debug)]
 pub struct MediaFile {
     pub fs_path: PathBuf,
+    pub fs_path_standard: PathBuf,
     pub file_name: String,
+    pub file_name_standard: String,
     pub media_type: Box<dyn TagReader>,
     pub dt_created: TagDateTime,
     pub author: String,
@@ -17,29 +19,32 @@ pub struct MediaFile {
 impl MediaFile {
     fn new(fs_path: PathBuf, media_type: Box<dyn TagReader>, author: String) -> Result<Self> {
         let dt_created = media_type.date_of_creation(&fs_path)?;
+        let file_name = format!(
+            "{}",
+            fs_path
+                .as_path()
+                .file_name()
+                .unwrap_or_default()
+                .to_str()
+                .unwrap_or_default()
+        );
+        let file_name_standard = format!(
+            "{}_{} {}",
+            dt_created.value.format("%Y%m%d-%H%M%S"),
+            author,
+            file_name
+        );
+        let fs_path_standard = fs_path.with_file_name(&file_name_standard);
+
         Ok(Self {
-            file_name: format!(
-                "{}",
-                fs_path
-                    .as_path()
-                    .file_name()
-                    .unwrap_or_default()
-                    .to_str()
-                    .unwrap_or_default()
-            ),
             fs_path,
+            fs_path_standard,
+            file_name,
+            file_name_standard,
             media_type,
             dt_created,
             author,
         })
-    }
-    pub fn get_standard_file_name(&self) -> String {
-        format!(
-            "{}_{} {}",
-            self.dt_created.value.format("%Y%m%d-%H%M%S"),
-            self.author,
-            self.file_name
-        )
     }
 }
 

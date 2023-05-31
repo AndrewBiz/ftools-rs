@@ -43,13 +43,16 @@ impl App {
     }
 
     pub fn process_file(&self, in_fn: &String) -> Result<String> {
-        log::debug!("Processing {}", in_fn);
-        // 1 init MediaFile
+        log::debug!("Started processing {}", in_fn);
+
         let mf = ftools::media_file::init(in_fn.clone(), self.author.clone())?;
         log::debug!("MediaFile read: {:?}", mf);
-        log::debug!("!!! standard name={}", mf.get_standard_file_name());
-        // 2 Read DT tag, prep new name
-        // 3 Rename file
-        Ok(mf.file_name)
+
+        let out_fn = mf.fs_path_standard.to_str().unwrap_or_default().to_string();
+        log::debug!("... renaming to: {}", &out_fn);
+        std::fs::rename(in_fn, &out_fn)?;
+
+        log::debug!("Finished processing {}", &out_fn);
+        Ok(out_fn)
     }
 }

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-echo "Generating sample files with phtools-related tags"
+echo "Generating sample files with ftools-related tags"
 # ********** CITY ************
 # cfile="tag_city0.JPG"
 # echo "Preparing file $cfile ..."

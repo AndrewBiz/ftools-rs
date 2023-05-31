@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-echo "Adding to $@ phtools-related date tags..."
+echo "Adding to $@ ftools-related date tags..."
 exiftool -P -overwrite_original "-EXIF:DateTimeOriginal=2001:01:01 01:01:01" "-IPTC:DateCreated=2002:02:02" "-IPTC:TimeCreated=02:02:02+02:00"  "-XMP:DateCreated=2003:03:03 03:03:03" "-EXIF:CreateDate=2004:04:04 04:04:04" "-XMP:CreateDate=2005:05:05 05:05:05" "-IPTC:DigitalCreationDate=2006:06:06" "-IPTC:DigitalCreationTime=06:06:06+06:00" "-FileModifyDate=2007:07:07 07:07:07" "$@"
 
 cfile="1exif_datetimeoriginal.JPG"

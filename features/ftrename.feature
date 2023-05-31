@@ -3,7 +3,7 @@ Feature: Rename photo and video files
   In order to have all my photo and video files (taken with my digital camera, digitized by scanner)
   get well readable and informative filenames
   As a photographer
-  I want to get the given files to be renamed to the standard phtools name template
+  I want to get the given files to be renamed to the standard ftools name template
 
   @ftrename
   Scenario: Output with -h produces usage information
@@ -21,32 +21,8 @@ Feature: Rename photo and video files
     When I run `ftrename -V`
     Then the output should match /[0-9]+\.[0-9]+\.[0-9]+(-[a-z,0-9]+)?/
 
-  # @ftrename
-  # Scenario: TMP TMP Originally named files are renamed to phtools standard name
-  #   Given a directory named "rename1"
-  #   And example files from "features/media/sony_jpg" copied to "rename1" named:
-  #  | DSC03403.JPG |
-  #  | DSC03313.JPG |
-  #  | DSC03499.JPG |
-  #  | DSC03802.JPG |
-  #  | DSC04032.JPG |
-
-  #   When I cd to "rename1"
-  #   When I run the following commands:
-  #   """bash
-  #   ftls | ftrename
-  #   """
-  #   Then the exit status should be 0
-
-  #   Then the stdout should contain each of:
-  #   | DSC03313.JPG |
-  #   | DSC03403.JPG |
-  #   | DSC03499.JPG |
-  #   | DSC03802.JPG |
-  #   | DSC04032.JPG |
-
   @ftrename
-  Scenario: Originally named files are renamed to phtools standard name
+  Scenario: Originally named files are renamed to ftools standard name
     Given a directory named "rename1"
     And example files from "features/media/sony_jpg" copied to "rename1" named:
    | DSC03403.JPG |
@@ -82,7 +58,7 @@ Feature: Rename photo and video files
     | ./DSC04032.JPG |
 
   # #@announce
-  # Scenario: Originally named files are renamed to phtools standard name using as a timestamp the 1st non-zero value of one of the tags (in priority order): EXIF:DateTimeOriginal -> IPTC:DateCreated + IPTC:TimeCreated -> XMP:DateCreated -> EXIF:CreateDate -> XMP:CreateDate -> IPTC:DigitalCreationDate + IPTC:DigitalCreationTime -> FileModifyDate
+  # Scenario: Originally named files are renamed to ftools standard name using as a timestamp the 1st non-zero value of one of the tags (in priority order): EXIF:DateTimeOriginal -> IPTC:DateCreated + IPTC:TimeCreated -> XMP:DateCreated -> EXIF:CreateDate -> XMP:CreateDate -> IPTC:DigitalCreationDate + IPTC:DigitalCreationTime -> FileModifyDate
 
   #   Given a directory named "rename2"
   #   And example files from "features/media/dates" copied to "rename2" named:
@@ -358,7 +334,7 @@ Feature: Rename photo and video files
   #   And the stderr should contain "ERROR: './DSC03313.JPG' - file renaming - non-standard file name"
 
   # #@announce
-  # Scenario: Re-runing phrename on the files previously renamed to Standard phtools Name will not change the Date-Time information kept in the file name
+  # Scenario: Re-runing phrename on the files previously renamed to Standard ftools Name will not change the Date-Time information kept in the file name
 
   #   Given a directory named "rename3"
   #   And example files from "features/media/dates_renamed" copied to "rename3" named:
@@ -389,7 +365,7 @@ Feature: Rename photo and video files
   #   | 20030303-030303_ANB file3.JPG |
 
   # #@announce
-  # Scenario: Re-runing phrename on the files previously renamed to Standard phtools Name with -t option will change the Date-Time information kept in the file name
+  # Scenario: Re-runing phrename on the files previously renamed to Standard ftools Name with -t option will change the Date-Time information kept in the file name
 
   #   Given a directory named "rename4"
   #   And example files from "features/media/dates_renamed" copied to "rename4" named:
@@ -420,7 +396,7 @@ Feature: Rename photo and video files
   #   | 20030303-132333_ANB file3.JPG |
 
   # #@announce
-  # Scenario: In MANUAL-RENAME mode files are renamed to phtools standard name with values set by the user
+  # Scenario: In MANUAL-RENAME mode files are renamed to ftools standard name with values set by the user
   #   Given a directory named "manual"
   #   And example files from "features/media/sony_jpg" copied to "manual" named:
   #  | DSC03403.JPG |
@@ -469,7 +445,7 @@ Feature: Rename photo and video files
   #   | 00000101-000000_ANB DSC03313.JPG |
 
   # #@announce
-  # Scenario: In MANUAL_RENAME mode running phrename on the files previously renamed to Standard phtools Name will not change the date-time-in-the-name
+  # Scenario: In MANUAL_RENAME mode running phrename on the files previously renamed to Standard ftools Name will not change the date-time-in-the-name
 
   #   Given a directory named "manual3"
   #   And example files from "features/media/dates_renamed" copied to "manual3" named:

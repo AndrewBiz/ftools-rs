@@ -246,7 +246,7 @@ Feature: Generate a list of ftools-friendly-files
     | foto.jpg  |
 
   @ftls
-  Scenario: Output produces supported-by-phtools file list keeping extentions unchanged (e.g. capitalized will remain capitalized)
+  Scenario: Output produces supported-by-ftools file list keeping extentions unchanged (e.g. capitalized will remain capitalized)
     Given a directory named "capitalized"
     Given empty files named:
       | ./capitalized/foto1.JPG |

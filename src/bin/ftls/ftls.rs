@@ -34,6 +34,7 @@ impl App {
         }
 
         // range prep
+        // TODO Get rid of unwrap()
         let mut range = 0..=0;
         let mut range_str_len = 0;
         if let Some(range_arg) = &args.range {

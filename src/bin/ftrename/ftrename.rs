@@ -49,9 +49,12 @@ impl App {
         log::debug!("MediaFile read: {:?}", mf);
 
         let out_fn = mf.fs_path_standard.to_str().unwrap_or_default().to_string();
-        log::debug!("... renaming to: {}", &out_fn);
-        std::fs::rename(in_fn, &out_fn)?;
-
+        if mf.fn_already_standard {
+            log::debug!("... keeping file_name unchanged");
+        } else {
+            log::debug!("... renaming to: {}", &out_fn);
+            std::fs::rename(in_fn, &out_fn)?;
+        }
         log::debug!("Finished processing {}", &out_fn);
         Ok(out_fn)
     }

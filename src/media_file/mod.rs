@@ -1,5 +1,7 @@
 use crate::tag::{TagDateTime, TagReader};
 use anyhow::{anyhow, Result};
+use regex::Regex;
+use std::default::default;
 use std::path::PathBuf;
 
 pub mod jpg;
@@ -11,6 +13,7 @@ pub struct MediaFile {
     pub fs_path_standard: PathBuf,
     pub file_name: String,
     pub file_name_standard: String,
+    pub fn_already_standard: bool,
     pub media_type: Box<dyn TagReader>,
     pub dt_created: TagDateTime,
     pub author: String,
@@ -18,7 +21,6 @@ pub struct MediaFile {
 
 impl MediaFile {
     fn new(fs_path: PathBuf, media_type: Box<dyn TagReader>, author: String) -> Result<Self> {
-        let dt_created = media_type.date_of_creation(&fs_path)?;
         let file_name = format!(
             "{}",
             fs_path
@@ -28,19 +30,34 @@ impl MediaFile {
                 .to_str()
                 .unwrap_or_default()
         );
-        let file_name_standard = format!(
-            "{}_{} {}",
-            dt_created.value.format("%Y%m%d-%H%M%S"),
-            author,
-            file_name
-        );
-        let fs_path_standard = fs_path.with_file_name(&file_name_standard);
+        // Check if tne name already standard
+        let re = Regex::new(r"^\d{8}-\d{6}_[A-Za-z]{3,6} .*$").unwrap();
+        let fn_already_standard = re.is_match(&file_name);
+        let dt_created;
+        let file_name_standard;
+        let fs_path_standard;
+
+        if fn_already_standard {
+            dt_created = default();
+            file_name_standard = file_name.clone();
+            fs_path_standard = fs_path.clone();
+        } else {
+            dt_created = media_type.date_of_creation(&fs_path)?;
+            file_name_standard = format!(
+                "{}_{} {}",
+                dt_created.value.format("%Y%m%d-%H%M%S"),
+                author,
+                file_name
+            );
+            fs_path_standard = fs_path.with_file_name(&file_name_standard);
+        }
 
         Ok(Self {
             fs_path,
             fs_path_standard,
             file_name,
             file_name_standard,
+            fn_already_standard,
             media_type,
             dt_created,
             author,

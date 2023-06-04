@@ -57,6 +57,29 @@ Feature: Rename photo and video files
     | ./DSC03802.JPG |
     | ./DSC04032.JPG |
 
+  @ftrename
+  Scenario: File with ftools standard names gets unchanged if I run ftrename on it
+    Given empty files named:
+    | 20130101-005311_ANB DSC00001.JPG    |
+    | 20130102-005311_BNAA DSC00002.JPG   |
+    | 20130103-005311_ANBAN DSC00003.JPG  |
+    | 20130104-005311_ANBANB DSC00004.JPG |
+    When I run the following commands:
+    """bash
+    ftls | ftrename -a anb
+    """
+    Then the exit status should be 0
+    And the stdout should contain each of:
+    | 20130101-005311_ANB DSC00001.JPG    |
+    | 20130102-005311_BNAA DSC00002.JPG   |
+    | 20130103-005311_ANBAN DSC00003.JPG  |
+    | 20130104-005311_ANBANB DSC00004.JPG |
+    And the following files should exist:
+    | 20130101-005311_ANB DSC00001.JPG    |
+    | 20130102-005311_BNAA DSC00002.JPG   |
+    | 20130103-005311_ANBAN DSC00003.JPG  |
+    | 20130104-005311_ANBANB DSC00004.JPG |
+
   # #@announce
   # Scenario: Originally named files are renamed to ftools standard name using as a timestamp the 1st non-zero value of one of the tags (in priority order): EXIF:DateTimeOriginal -> IPTC:DateCreated + IPTC:TimeCreated -> XMP:DateCreated -> EXIF:CreateDate -> XMP:CreateDate -> IPTC:DigitalCreationDate + IPTC:DigitalCreationTime -> FileModifyDate
 

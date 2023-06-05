@@ -58,7 +58,7 @@ Feature: Rename photo and video files
     | ./DSC04032.JPG |
 
   @ftrename
-  Scenario: File with ftools standard names gets unchanged if I run ftrename on it
+  Scenario: File with ftools standard name is kept unchanged if I run ftrename on it
     Given empty files named:
     | 20130101-005311_ANB DSC00001.JPG    |
     | 20130102-005311_BNAA DSC00002.JPG   |
@@ -79,6 +79,38 @@ Feature: Rename photo and video files
     | 20130102-005311_BNAA DSC00002.JPG   |
     | 20130103-005311_ANBAN DSC00003.JPG  |
     | 20130104-005311_ANBANB DSC00004.JPG |
+
+  @ftrename
+  Scenario: File with ftools standard name gets changed if I force to change author ninckname in it and date-time-in-the-name keep unchanged
+    Given a directory named "rename3"
+    And example files from "features/media/dates_renamed" copied to "rename3" named:
+    | 20010101-010101_XXX file1.JPG |
+    | 20021212-020202_ANB file2.JPG |
+    | 20030303-132333_YYY file3.JPG |
+
+    When I cd to "rename3"
+    When I run the following commands:
+    """bash
+    ftls | ftrename -a anb --force-author
+    """
+    Then the exit status should be 0
+
+    And the stdout should contain each of:
+    | 20010101-010101_ANB file1.JPG |
+    | 20021212-020202_ANB file2.JPG |
+    | 20030303-132333_ANB file3.JPG |
+
+    And the following files should exist:
+    | 20010101-010101_ANB file1.JPG |
+    | 20021212-020202_ANB file2.JPG |
+    | 20030303-132333_ANB file3.JPG |
+
+    And the following files should not exist:
+    | 20010101-010101_ANB file1.JPG |
+    | 20020202-020202_ANB file2.JPG |
+    | 20030303-030303_ANB file3.JPG |
+
+
 
   # #@announce
   # Scenario: Originally named files are renamed to ftools standard name using as a timestamp the 1st non-zero value of one of the tags (in priority order): EXIF:DateTimeOriginal -> IPTC:DateCreated + IPTC:TimeCreated -> XMP:DateCreated -> EXIF:CreateDate -> XMP:CreateDate -> IPTC:DigitalCreationDate + IPTC:DigitalCreationTime -> FileModifyDate
@@ -247,7 +279,7 @@ Feature: Rename photo and video files
   #   | XX-FLM101-04.JPG |
   #   | FLM102-05.JPG |
 
-  # #@announce
+  # NO NEED (see phrename - ruby phtools gem)
   # Scenario: Non-Standard named files are renamed back to original names as well
   #   Given empty files named:
   #   | 20130101-105311_ANB[12345678-dfdfdfdf]{flags}DSC10001.JPG |
@@ -356,37 +388,7 @@ Feature: Rename photo and video files
   #   Then the exit status should be 0
   #   And the stderr should contain "ERROR: './DSC03313.JPG' - file renaming - non-standard file name"
 
-  # #@announce
-  # Scenario: Re-runing phrename on the files previously renamed to Standard ftools Name will not change the Date-Time information kept in the file name
-
-  #   Given a directory named "rename3"
-  #   And example files from "features/media/dates_renamed" copied to "rename3" named:
-  #   | 20010101-010101_XXX file1.JPG |
-  #   | 20021212-020202_ANB file2.JPG |
-  #   | 20030303-132333_YYY file3.JPG |
-
-  #   When I cd to "rename3"
-  #   When I run the following commands:
-  #   """bash
-  #   phls | phrename -a anb
-  #   """
-  #   Then the exit status should be 0
-
-  #   Then the stdout should contain each of:
-  #   | 20010101-010101_ANB file1.JPG |
-  #   | 20021212-020202_ANB file2.JPG |
-  #   | 20030303-132333_ANB file3.JPG |
-
-  #   And the following files should exist:
-  #   | 20010101-010101_ANB file1.JPG |
-  #   | 20021212-020202_ANB file2.JPG |
-  #   | 20030303-132333_ANB file3.JPG |
-
-  #   And the following files should not exist:
-  #   | 20010101-010101_ANB file1.JPG |
-  #   | 20020202-020202_ANB file2.JPG |
-  #   | 20030303-030303_ANB file3.JPG |
-
+ 
   # #@announce
   # Scenario: Re-runing phrename on the files previously renamed to Standard ftools Name with -t option will change the Date-Time information kept in the file name
 

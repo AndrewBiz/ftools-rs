@@ -36,8 +36,12 @@ pub struct CliArgs {
 
     // TODO! - validation via #[arg(value_parser = valid_autor)]
     #[clap(long, short = 'a', verbatim_doc_comment)]
-    /// Sets the author nickname. The nickname should be 3 ASCII chars long (e.g. ANB)
+    /// Sets the author nickname. The nickname should be 3 to 6 ASCII chars long (e.g. ANB)
     author: Option<String>,
+
+    #[clap(long)]
+    /// Force to change author in the name. Useful if file already has Standard Name and you want only change the author keeping date-time unchanged
+    force_author: bool,
 }
 
 #[unix_sigpipe = "sig_dfl"]

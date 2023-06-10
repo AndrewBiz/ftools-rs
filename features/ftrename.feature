@@ -79,9 +79,14 @@ Feature: Rename photo and video files
     | 20130102-005311_BNAA DSC00002.JPG   |
     | 20130103-005311_ANBAN DSC00003.JPG  |
     | 20130104-005311_ANBANB DSC00004.JPG |
+    And the following files should not exist:
+    | 20130102-005311_ANB DSC00002.JPG    |
+    | 20130103-005311_ANB DSC00003.JPG    |
+    | 20130104-005311_ANB DSC00004.JPG    |
+
 
   @ftrename
-  Scenario: File with ftools standard name gets changed if I force to change author ninckname in it and date-time-in-the-name keep unchanged
+  Scenario: File with ftools standard name gets changed if I force to change author ninckname in it. Wherein existing date-time-in-the-name kept unchanged
     Given a directory named "rename3"
     And example files from "features/media/dates_renamed" copied to "rename3" named:
     | 20010101-010101_XXX file1.JPG |
@@ -106,10 +111,10 @@ Feature: Rename photo and video files
     | 20030303-132333_ANB file3.JPG |
 
     And the following files should not exist:
-    | 20010101-010101_ANB file1.JPG |
+    | 20010101-010101_XXX file1.JPG |
     | 20020202-020202_ANB file2.JPG |
     | 20030303-030303_ANB file3.JPG |
-
+    | 20030303-132333_YYY file3.JPG |
 
 
   # #@announce

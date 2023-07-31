@@ -1,7 +1,7 @@
 use crate::tag::{TagDateTime, TagReader};
 use anyhow::{anyhow, Result};
 use regex::Regex;
-use std::default::default;
+use std::default::Default;
 use std::path::PathBuf;
 
 pub mod jpg;
@@ -38,7 +38,7 @@ impl MediaFile {
         let fs_path_standard;
 
         if fn_already_standard {
-            dt_created = default();
+            dt_created = Default::default();
             file_name_standard = file_name.clone();
             fs_path_standard = fs_path.clone();
         } else {

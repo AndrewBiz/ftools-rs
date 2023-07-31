@@ -1,5 +1,3 @@
-#![feature(default_free_fn)]
-
 use std::io::Write;
 
 pub mod media_file;

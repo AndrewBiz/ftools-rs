@@ -44,7 +44,7 @@ pub struct CliArgs {
     force_author: bool,
 }
 
-#[unix_sigpipe = "sig_dfl"]
+#[unix_sigpipe = "sig_dfl"] // This is for correct working in pipe mode under unix-like systems
 fn main() -> Result<()> {
     let cli_args = CliArgs::parse();
 

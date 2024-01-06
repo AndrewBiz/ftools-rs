@@ -11,10 +11,10 @@ pub struct App {
 
 impl App {
     pub fn init(args: CliArgs) -> App {
-        log::debug!("Start init");
+        log::debug!("Start app init");
         let author = args.author.unwrap_or_default().to_ascii_uppercase();
         let force_author = args.force_author;
-        log::debug!("Finish init");
+        log::debug!("Finish app init");
         App {
             author,
             force_author,
@@ -51,7 +51,7 @@ impl App {
         log::debug!("MediaFile read: {:?}", mf);
 
         let out_fn = mf.fs_path_standard.to_str().unwrap_or_default().to_string();
-        if mf.fn_already_standard {
+        if *in_fn == out_fn {
             log::debug!("... keeping file_name unchanged");
         } else {
             log::debug!("... renaming to: {}", &out_fn);

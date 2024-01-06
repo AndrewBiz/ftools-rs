@@ -50,14 +50,16 @@ impl App {
         let mf = ftools::media_file::init(in_fn.clone(), self.author.clone())?;
         log::debug!("MediaFile read: {:?}", mf);
 
+        // TODO: To be changed depending on input parameters
         let out_fn = mf.fs_path_standard.to_str().unwrap_or_default().to_string();
+
         if *in_fn == out_fn {
             log::debug!("... keeping file_name unchanged");
         } else {
             log::debug!("... renaming to: {}", &out_fn);
             std::fs::rename(in_fn, &out_fn)?;
         }
-        log::debug!("Finished processing {}", &out_fn);
+        log::debug!("Finished processing {}", &in_fn);
         Ok(out_fn)
     }
 }

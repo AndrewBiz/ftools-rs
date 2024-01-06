@@ -12,6 +12,8 @@ pub struct TagDateTime {
     pub value: NaiveDateTime,
 }
 pub trait TagReader: fmt::Debug {
+    // TODO: common function for all types which will use input params and call specific functions of types
+
     fn date_of_creation(&self, fs_path: &PathBuf) -> Result<TagDateTime>;
 
     /// exiftool

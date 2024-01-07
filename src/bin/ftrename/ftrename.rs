@@ -49,12 +49,20 @@ impl App {
     pub fn process_file(&self, in_fn: &String) -> Result<String> {
         log::debug!("Started processing {}", in_fn);
 
-        let mf = ftools::media_file::init(in_fn.clone(), self.author.clone())?;
+        let mf = ftools::media_file::init(in_fn.clone(), self.author.clone())?; // TODO: not to exit in case of error
         log::debug!("MediaFile read: {:?}", mf);
 
+        let out_fn;
         // TODO: To be changed depending on input parameters
-        let out_fn = mf.fs_path_standard.to_str().unwrap_or_default().to_string();
+        if self.clean {
+            // renaming to the original name
+            out_fn = mf.fs_path_original.to_str().unwrap_or_default().to_string();
+        } else {
+            // renaming to standard name
+            out_fn = mf.fs_path_standard.to_str().unwrap_or_default().to_string();
+        }
 
+        // renaming the file (if needed):
         if *in_fn == out_fn {
             log::debug!("... keeping file_name unchanged");
         } else {

@@ -121,7 +121,7 @@ pub trait TagReader: fmt::Debug {
 
         Ok(TagDateTime {
             name: String::from("FileModifiedDate"),
-            reader: String::from("fs_metadata"),
+            reader: String::from("std::fs"),
             value_raw: format!("{:?}", fmd_sys),
             value: fmd_dtl.naive_local(),
         })

@@ -121,9 +121,20 @@ pub trait TagReader: fmt::Debug {
 
         Ok(TagDateTime {
             name: String::from("FileModifiedDate"),
-            reader: String::from("std::fs"),
+            reader: String::from("ftools"),
             value_raw: format!("{:?}", fmd_sys),
             value: fmd_dtl.naive_local(),
+        })
+    }
+    /// reading date_time from string in standard form
+    fn read_date_time_from_str(&self, dt_str: &str) -> Result<TagDateTime> {
+        let value = NaiveDateTime::parse_from_str(&dt_str, "%Y%m%d-%H%M%S").unwrap_or_default();
+
+        Ok(TagDateTime {
+            name: String::from("date-time-in-the-name"),
+            reader: String::from("ftools"),
+            value_raw: format!("{}", dt_str),
+            value,
         })
     }
 }

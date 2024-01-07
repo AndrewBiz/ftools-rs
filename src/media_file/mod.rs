@@ -46,15 +46,17 @@ impl MediaFile {
 
         if let Some(caps) = re.captures(&file_name_in) {
             // already standard name given
-            fn_already_standard = true;
             log::debug!("filename regex <date_time> : {}", &caps["date_time"]);
             log::debug!("filename regex <author>    : {}", &caps["author"]);
             log::debug!("filename regex <name_orig> : {}", &caps["name_orig"]);
+            fn_already_standard = true;
+            dt_created = media_type
+                .read_date_time_from_str(&caps["date_time"])
+                .unwrap_or_default();
             file_name_standard = file_name_in.clone();
             fs_path_standard = fs_path_in.clone();
             file_name_original = String::from(&caps["name_orig"]);
             fs_path_original = fs_path_in.with_file_name(&file_name_original);
-            dt_created = Default::default();
         } else {
             // non standard name given
             fn_already_standard = false;

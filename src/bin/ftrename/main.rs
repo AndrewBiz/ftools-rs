@@ -39,9 +39,12 @@ pub struct CliArgs {
     /// Sets the author nickname. The nickname should be 3 to 6 ASCII chars long (e.g. ANB)
     author: Option<String>,
 
-    #[clap(long)]
-    /// Force to change author in the name. Useful if file already has Standard Name and you want only change the author keeping date-time unchanged
-    force_author: bool,
+    // #[clap(long)]
+    // /// Force to change author in the name. Useful if file already has Standard Name and you want only change the author keeping date-time unchanged
+    // force_author: bool,
+    #[clap(long, short = 'c')]
+    /// Rename file back to it's original name
+    clean: bool,
 }
 
 #[unix_sigpipe = "sig_dfl"] // This is for correct working in pipe mode under unix-like systems

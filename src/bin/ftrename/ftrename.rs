@@ -6,18 +6,20 @@ use std::io::BufRead;
 // app class
 pub struct App {
     author: String,
-    force_author: bool,
+    // force_author: bool,
+    clean: bool,
 }
 
 impl App {
     pub fn init(args: CliArgs) -> App {
         log::debug!("Start app init");
         let author = args.author.unwrap_or_default().to_ascii_uppercase();
-        let force_author = args.force_author;
+        // let force_author = args.force_author;
         log::debug!("Finish app init");
         App {
             author,
-            force_author,
+            // force_author,
+            clean: args.clean,
         }
     }
 

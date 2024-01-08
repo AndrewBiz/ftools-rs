@@ -85,6 +85,7 @@ pub trait TagReader: fmt::Debug {
             fs_path.to_str().unwrap_or_default()
         );
         let sample = std::fs::read(fs_path)?;
+        // TODO validate against zero sample and do not panic
         let sample = match sample[..4] {
             // jpeg jfif
             [0xff, 0xd8, 0xff, 0xe0] => &sample[30..],

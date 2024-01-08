@@ -75,3 +75,9 @@ fn main() -> Result<()> {
     log::debug!("FINISH main");
     Ok(())
 }
+
+#[test]
+fn verify_cli_args() {
+    use clap::CommandFactory;
+    CliArgs::command().debug_assert()
+}

@@ -24,7 +24,7 @@ Feature: Generate a list of ftools-friendly-files
 
   @ftls
   Scenario: Can show which file types are supported by the command
-    When I run `ftls --supported-types`
+    When I run `ftls --supported_types`
     Then the stdout should contain each of:
       | supports file types |
       | jpg                 |

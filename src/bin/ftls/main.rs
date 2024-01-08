@@ -10,6 +10,7 @@ use clap::Parser;
 #[command(name = COMMAND_NAME)]
 #[command(version = VERSION)]
 #[command(long_about = None, verbatim_doc_comment)]
+#[command(rename_all = "snake_case")]
 
 /// ****************** Keep Your Media Files In Order (c) ANB ******************
 /// ftls scans given directories and generates list of files to standard

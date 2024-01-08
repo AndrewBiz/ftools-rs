@@ -9,12 +9,12 @@ Feature: Rename original photo and video files into ft-standard names
   Scenario: Output with -h produces usage information
     When I successfully run `ftstd -h`
     Then the stdout should contain each of:
-      | *Keep Your Media Files In Order* (c) ANB |
-      | Usage:                                   |
-      | Options:                                 |
-      | -h, --help                               |
-      | --debug                                  |
-      | -V, --version                            |
+      | Keep Your Media Files In Order (c) ANB |
+      | Usage:                                 |
+      | Options:                               |
+      | -h, --help                             |
+      | --debug                                |
+      | -V, --version                          |
 
   @ftstd
   Scenario: Output with -V produces version information

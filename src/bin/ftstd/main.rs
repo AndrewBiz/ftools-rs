@@ -7,15 +7,18 @@ mod ftstd;
 use clap::Parser;
 #[derive(Parser, Debug)]
 #[clap(version, long_about = None, verbatim_doc_comment)]
-/// *Keep Your Media Files In Order* (c) ANB
-///      ftstd renames the original input file to the ft-standard name:
-/// YYYYmmdd-HHMMSS_AAA ORIGINAL.EXT, where:
-/// YYYYmmdd-HHMMSS - Date-Time of content creation,
-/// AAA - the author nickname,
-/// ORIGINAL.EXT - the original file name (e.g. given by digital camera).
+/// ****************** Keep Your Media Files In Order (c) ANB ******************
+/// ftstd renames the original media file to the ft-standard name. For example,
+/// the file "DSC03455.JPG" with Exif:DateTimeOriginal = "2013:01:08 12:41:45"
+/// and the author set as "ANB" will be renamed to "20130108-124145_ANB DSC03455.JPG"
+/// ---
+/// ft-standard template: YYYYmmdd-HHMMSS_AAA ORIGINAL.EXT, where:
+///     YYYYmmdd-HHMMSS - Date-Time of content creation,
+///     AAA - the author nickname,
+///     ORIGINAL.EXT - the original file name (e.g. given by digital camera)
+/// ---
 /// By default date-time info is taken from EXIF area (in most cases DateTimeOriginal tag).
 /// If no internal tags found - FileModifiedDate is used instead
-/// Example: input file DSC03455.JPG will be renamed to 20130108-124145_ANB DSC03455.JPG
 /// ftstd acts as a 'filter' meaning it expects the input files to be passed
 /// to STDIN and after the job is done it produces STDOUT with the list of renamed
 /// files. In other words this command is intended to be used with other programs

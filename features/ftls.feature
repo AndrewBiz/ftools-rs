@@ -9,12 +9,12 @@ Feature: Generate a list of ftools-friendly-files
   Scenario: Output with -h produces usage information
     When I run `ftls -h`
     Then the stdout should contain each of:
-      | *Keep Your Media Files In Order* (c) ANB |
-      | Usage:                                   |
-      | Options:                                 |
-      | -h, --help                               |
-      | --debug                                  |
-      | -V, --version                            |
+      | Keep Your Media Files In Order (c) ANB |
+      | Usage:                                 |
+      | Options:                               |
+      | -h, --help                             |
+      | --debug                                |
+      | -V, --version                          |
 
 
   @ftls

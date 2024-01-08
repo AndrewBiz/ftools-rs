@@ -1,14 +1,18 @@
 #![feature(unix_sigpipe)]
 mod ftls_lib;
 
+const VERSION: &str = "0.1.1";
+const COMMAND_NAME: &str = "ftls";
+
 // command options and arguments
 use clap::Parser;
-
 #[derive(Parser, Debug)]
-#[clap(version, long_about = None, verbatim_doc_comment)]
+#[command(name = COMMAND_NAME)]
+#[command(version = VERSION)]
+#[command(long_about = None, verbatim_doc_comment)]
 
-/// *Keep Your Media Files In Order* (c) ANB
-///     ftls scans given directories and generates list of files to standard
+/// ****************** Keep Your Media Files In Order (c) ANB ******************
+/// ftls scans given directories and generates list of files to standard
 /// output. In short it acts like 'ls' command (or 'dir' in Windows) but only for
 /// media files supported by ftools.
 /// Set DIRs to be scanned as an arguments. If no DIRs are set - current dir '.'
@@ -19,33 +23,35 @@ use clap::Parser;
 /// from STDIN, it generates list of files based on input parameters and sends it
 /// to STDOUT. The command is intended to be used with other programs
 /// connected via pipes as a 1st command in the pipe chain, e.g.:
-///    ftls abc 'IMG_*.jpg' | ftrename -a anb
-/// => scans 'abc' folder and sends all found IMG_*.jpg files to ftrename command
+/// ---
+///    ftls abc 'IMG_*.jpg' | ftstd -a anb
+/// # scans 'abc' folder and sends all found IMG_*.jpg files to ftstd command
+/// ---
 
 pub struct CliArgs {
-    #[clap(long)]
-    /// Show debug information
-    debug: bool,
+    #[arg(verbatim_doc_comment)]
+    /// Set DIRs to be scanned and FILEMASKs to filter files.
+    /// Empty value is treated as if the user sets `ftls . '*.*'`
+    dir_or_filemask: Vec<String>,
 
-    #[clap(long)]
-    /// Show supported file types
-    supported_types: bool,
-
-    #[clap(short = 'R', long)]
+    #[arg(short = 'R', long)]
     /// Recursively scan directories
     recursive: bool,
 
-    #[clap(long, verbatim_doc_comment)]
+    #[arg(long, verbatim_doc_comment)]
     /// Sets the range of filename endings to be included
     /// into the output. Example: --range '05..07' will take
     /// only files with the filename endings 05, 06, 07 and
     /// will not take any other files
     range: Option<String>,
 
-    #[clap(verbatim_doc_comment)]
-    /// Set DIRs to be scanned and FILEMASKs to filter files.
-    /// Empty value is treated as if the user sets `ftls . '*.*'`
-    dir_or_filemask: Vec<String>,
+    #[arg(long)]
+    /// Show supported file types
+    supported_types: bool,
+
+    #[arg(long)]
+    /// Show debug information
+    debug: bool,
 }
 
 #[unix_sigpipe = "sig_dfl"]
@@ -63,7 +69,7 @@ fn main() {
 
     if cli_args.supported_types {
         println!(
-            "ftls supports file types: {:#?}",
+            "ftls explicitly supports file types: {:#?}",
             ftools::SUPPORTED_FILE_TYPE
         );
         std::process::exit(0)

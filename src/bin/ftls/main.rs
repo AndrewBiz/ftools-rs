@@ -1,5 +1,5 @@
 #![feature(unix_sigpipe)]
-mod ftls;
+mod ftls_lib;
 
 // command options and arguments
 use clap::Parser;
@@ -68,7 +68,7 @@ fn main() {
         );
         std::process::exit(0)
     }
-    let app = ftls::App::init(cli_args);
+    let app = ftls_lib::App::init(cli_args);
     app.run();
 
     log::debug!("FINISH main");

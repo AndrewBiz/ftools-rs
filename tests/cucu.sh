@@ -6,5 +6,9 @@ FEATURES=$PWD"/features"
 PATH=$RUST_EXE:$FEATURES:$PATH
 #echo $PATH
 # cucumber -f progress summary -msi $@
+echo "****** CARGO TEST ********************************"
+cargo test
+echo "******* CUCUMBER TEST ****************************"
 cucumber -f progress $@
+echo "**************************************************"
 # cucumber $@

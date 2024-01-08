@@ -12,6 +12,7 @@ pub struct App {
 impl App {
     pub fn init(args: CliArgs) -> App {
         log::debug!("Start app init");
+        // let author = args.author.to_ascii_uppercase();
         let author = args.author.unwrap_or_default().to_ascii_uppercase();
         log::debug!("Finish app init");
         App {

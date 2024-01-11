@@ -15,9 +15,9 @@ pub struct MediaFile {
     file_name_in: String,           // initial full name of the file
     file_name_standard: String,     // standardtized name of the file
     file_name_original: String,     // original name of the file
-    fn_already_standard: bool,      // true if the input name was already standard
+    pub fn_already_standard: bool,  // true if the input name was already standard
     media_type: Box<dyn TagReader>, // type of the file
-    dt_created: TagDateTime,        // date-time of creation of the file
+    pub dt_created: TagDateTime,    // date-time of creation of the file
 }
 
 impl MediaFile {

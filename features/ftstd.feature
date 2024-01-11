@@ -22,7 +22,7 @@ Feature: Rename original photo and video files into ft-standard names
     Then the output should match /[0-9]+\.[0-9]+\.[0-9]+(-[a-z,0-9]+)?/
 
   @ftstd
-  Scenario: Originally named files are renamed to ft-standard name
+  Scenario: Non ft-standard files are renamed to ft-standard ones
     Given a directory named "rename1"
     And example files from "features/media/sony_jpg" copied to "rename1" named:
    | DSC03403.JPG |
@@ -83,6 +83,56 @@ Feature: Rename original photo and video files into ft-standard names
     | 20130102-005311_ANB DSC00002.JPG    |
     | 20130103-005311_ANB DSC00003.JPG    |
     | 20130104-005311_ANB DSC00004.JPG    |
+
+
+  @ftstd
+  Scenario: In verbose mode files are processed with comments printed in stderr channel
+    Given example files from "features/media/sony_jpg" copied to "." named:
+   | DSC03403.JPG |
+    And empty files named:
+   | 20130101-005311_ANB DSC00001.JPG    |
+
+    When I run the following commands:
+    """bash
+    ftls | ftstd -a anb --verbose
+    """
+    Then the exit status should be 0
+
+    Then the stdout should contain each of:
+    | 20130103-153908_ANB DSC03403.JPG |
+    | 20130101-005311_ANB DSC00001.JPG |
+    And the stderr should contain each of:
+    | [date-time source: DateTimeOriginal, reader: quickexif] |
+    | [name is already ft-standard - keeping unchanged]       |
+
+
+  @ftstd
+  Scenario: files with ft-standard names can be renamed back to their original names
+    Given empty files named:
+    | 20130101-005311_ANB DSC00001.JPG    |
+    | 20130102-005311_ANBA DSC00002.JPG   |
+    | 20130103-005311_ANBAN DSC00003.JPG  |
+    | 20130104-005311_ANBANB DSC00004.JPG |
+    When I run the following commands:
+    """bash
+    ftls | ftstd --undo
+    """
+    Then the exit status should be 0
+    And the stdout should contain each of:
+    | DSC00001.JPG |
+    | DSC00002.JPG |
+    | DSC00003.JPG |
+    | DSC00004.JPG |
+    And the stdout should not contain any of:
+    | 20130101-005311_ANB DSC00001.JPG    |
+    | 20130102-005311_ANBA DSC00002.JPG   |
+    | 20130103-005311_ANBAN DSC00003.JPG  |
+    | 20130104-005311_ANBANB DSC00004.JPG |
+    And the following files should exist:
+    | DSC00001.JPG |
+    | DSC00002.JPG |
+    | DSC00003.JPG |
+    | DSC00004.JPG |
 
 
   # #@announce
@@ -197,33 +247,6 @@ Feature: Rename original photo and video files into ft-standard names
   #   And the following files should not exist:
   #   | ./20130103-103254_ANB DSC03313.JPG |
 
-  @ftstd
-  Scenario: Standard named files can be renamed back to their original names
-    Given empty files named:
-    | 20130101-005311_ANB DSC00001.JPG    |
-    | 20130102-005311_ANBA DSC00002.JPG   |
-    | 20130103-005311_ANBAN DSC00003.JPG  |
-    | 20130104-005311_ANBANB DSC00004.JPG |
-    When I run the following commands:
-    """bash
-    ftls | ftstd --undo
-    """
-    Then the exit status should be 0
-    And the stdout should contain each of:
-    | DSC00001.JPG |
-    | DSC00002.JPG |
-    | DSC00003.JPG |
-    | DSC00004.JPG |
-    And the stdout should not contain any of:
-    | 20130101-005311_ANB DSC00001.JPG    |
-    | 20130102-005311_ANBA DSC00002.JPG   |
-    | 20130103-005311_ANBAN DSC00003.JPG  |
-    | 20130104-005311_ANBANB DSC00004.JPG |
-    And the following files should exist:
-    | DSC00001.JPG |
-    | DSC00002.JPG |
-    | DSC00003.JPG |
-    | DSC00004.JPG |
 
   # #@announce
   # Scenario: Files are with HEADER renamed back to original names

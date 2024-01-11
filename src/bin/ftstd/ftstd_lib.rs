@@ -1,7 +1,7 @@
 use crate::CliArgs;
 use anyhow::{anyhow, Result};
 use atty::Stream;
-use std::io::BufRead;
+use std::{default, io::BufRead};
 
 // app class
 pub struct App {
@@ -36,28 +36,45 @@ impl App {
             let line = line.unwrap_or_default();
 
             match self.process_file(&line) {
-                Ok(out_fn) => ftools::output_to_stdout(&out_fn),
-                Err(e) => eprintln!(" ! {} - {}", &line, e),
+                Ok((out_fn, verbose_msg)) => {
+                    ftools::output_to_stdout(&out_fn);
+                    ftools::output_to_stderr(&verbose_msg);
+                }
+                Err(e) => eprintln!("    [error: {} - {}]", &line, e),
             }
         }
         log::debug!("Finish run");
         Ok(())
     }
 
-    pub fn process_file(&self, in_fn: &String) -> Result<String> {
+    pub fn process_file(&self, in_fn: &String) -> Result<(String, String)> {
         log::debug!("Started processing {}", in_fn);
 
         let mf = ftools::media_file::init(in_fn.clone(), self.author.clone())?; // TODO: not to exit in case of error
         log::debug!("MediaFile read: {:?}", mf);
 
         let out_fn;
+        let verbose_msg: String;
         // TODO: To be changed depending on input parameters
         if self.undo {
             // renaming to the original name
             out_fn = mf.fs_path_original.to_str().unwrap_or_default().to_string();
+            if mf.fn_already_standard {
+                verbose_msg = format!("");
+            } else {
+                verbose_msg = format!("    [name is not ft-standard - keeping unchanged]");
+            }
         } else {
             // renaming to standard name
             out_fn = mf.fs_path_standard.to_str().unwrap_or_default().to_string();
+            if mf.fn_already_standard {
+                verbose_msg = format!("    [name is already ft-standard - keeping unchanged]");
+            } else {
+                verbose_msg = format!(
+                    "    [date-time source: {}, reader: {}]",
+                    mf.dt_created.name, mf.dt_created.reader
+                );
+            }
         }
 
         // renaming the file (if needed):
@@ -68,6 +85,6 @@ impl App {
             std::fs::rename(in_fn, &out_fn)?;
         }
         log::debug!("Finished processing {}", &in_fn);
-        Ok(out_fn)
+        Ok((out_fn, verbose_msg))
     }
 }

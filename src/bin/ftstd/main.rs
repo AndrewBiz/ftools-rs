@@ -50,6 +50,10 @@ pub struct CliArgs {
     /// Rename file back to it's original name
     undo: bool,
 
+    #[arg(long, short)]
+    /// Extra information about file renaming
+    verbose: bool,
+
     #[arg(long)]
     /// Show debug information
     debug: bool,

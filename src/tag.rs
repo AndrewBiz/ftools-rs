@@ -6,8 +6,8 @@ use std::{path::PathBuf, process::Command};
 
 #[derive(Debug, Default)]
 pub struct TagDateTime {
-    name: String,
-    reader: String,
+    pub name: String,
+    pub reader: String,
     value_raw: String,
     pub value: NaiveDateTime,
 }

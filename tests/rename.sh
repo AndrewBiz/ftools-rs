@@ -1,4 +1,5 @@
 RUST_EXE=$PWD"/target/debug"
 PATH=$RUST_EXE:$PATH
 #echo $PATH
-ftls tmp/aruba | ftstd -a anb --debug
+cp features/media/sony_jpg/*.JPG tmp/aruba/
+ftls tmp/aruba | ftstd -a anb --verbose

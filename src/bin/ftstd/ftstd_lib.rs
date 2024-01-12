@@ -7,6 +7,7 @@ use std::{default, io::BufRead};
 pub struct App {
     author: String,
     undo: bool,
+    verbose: bool,
 }
 
 impl App {
@@ -18,6 +19,7 @@ impl App {
         App {
             author,
             undo: args.undo,
+            verbose: args.verbose,
         }
     }
 
@@ -38,7 +40,9 @@ impl App {
             match self.process_file(&line) {
                 Ok((out_fn, verbose_msg)) => {
                     ftools::output_to_stdout(&out_fn);
-                    ftools::output_to_stderr(&verbose_msg);
+                    if self.verbose {
+                        ftools::output_to_stderr(&verbose_msg)
+                    }
                 }
                 Err(e) => eprintln!("    [error: {} - {}]", &line, e),
             }

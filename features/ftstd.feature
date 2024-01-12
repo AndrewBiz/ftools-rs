@@ -56,6 +56,10 @@ Feature: Rename original photo and video files into ft-standard names
     | ./DSC03499.JPG |
     | ./DSC03802.JPG |
     | ./DSC04032.JPG |
+    And the stderr should not contain any of:
+    | date-time source  |
+    | keeping unchanged |
+
 
   @ftstd
   Scenario: File with ft-standard name is kept unchanged if I run ftstd on it

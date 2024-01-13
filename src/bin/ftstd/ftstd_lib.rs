@@ -66,7 +66,7 @@ impl App {
             if mf.fn_already_standard {
                 verbose_msg = format!("");
             } else {
-                verbose_msg = format!("    [name is not ft-standard - keeping unchanged]");
+                verbose_msg = format!("    [name is not ft-standard - nothing to undo]");
             }
         } else {
             // renaming to standard name

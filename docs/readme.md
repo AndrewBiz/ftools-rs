@@ -2,6 +2,7 @@ Initial setup:
 
 1. Install rust
 2. Update rust
+
 ```
 rustup update
 ```
@@ -13,4 +14,4 @@ rustup override set nightly
 ```
 
 4. install ruby
-5. follow features/readme-test.md
+5. follow features/support/readme-test.md

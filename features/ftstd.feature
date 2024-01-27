@@ -117,10 +117,11 @@ Feature: Rename original photo and video files into ft-standard names
     | 20130102-005311_ANBA DSC00002.JPG   |
     | 20130103-005311_ANBAN DSC00003.JPG  |
     | 20130104-005311_ANBANB DSC00004.JPG |
-    When I run the following commands:
-    """bash
-    ftls | ftstd --undo
-    """
+    Given an executable named "bin/ftls_ftstd_undo.cmd" with:
+      """bash
+      ftls | ftstd --undo
+      """
+    When I run `bin/ftls_ftstd_undo.cmd`
     Then the exit status should be 0
     And the stdout should contain each of:
     | DSC00001.JPG |

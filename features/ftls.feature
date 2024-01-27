@@ -97,26 +97,27 @@ Feature: Generate a list of ftools-friendly-files
   Scenario: The output shows files inside given directories
     Given a directory named "fotos1"
     And empty files named:
-      | ./fotos1/f1.jpg |
-      | ./fotos1/f2.jpg |
-      | ./fotos1/f3.jpg |
-      | ./fotos1/f4.jpg |
+      | ./fotos1/d1_f1.jpg |
+      | ./fotos1/d1_f2.jpg |
+      | ./fotos1/d1_f3.jpg |
+      | ./fotos1/d1_f4.jpg |
     Given a directory named "fotos2"
     And empty files named:
-      | ./fotos2/f1.jpg |
-      | ./fotos2/f2.jpg |
-      | ./fotos2/f3.jpg |
-      | ./fotos2/f4.jpg |
+      | ./fotos2/d2_f1.jpg |
+      | ./fotos2/d2_f2.jpg |
+      | ./fotos2/d2_f3.jpg |
+      | ./fotos2/d2_f4.jpg |
     When I successfully run `ftls fotos1 fotos2`
     Then the stdout should contain each of:
-      | fotos1/f1.jpg |
-      | fotos1/f2.jpg |
-      | fotos1/f3.jpg |
-      | fotos1/f4.jpg |
-      | fotos2/f1.jpg |
-      | fotos2/f2.jpg |
-      | fotos2/f3.jpg |
-      | fotos2/f4.jpg |
+      | d1_f1.jpg |
+      | d1_f2.jpg |
+      | d1_f3.jpg |
+      | d1_f4.jpg |
+      | d2_f1.jpg |
+      | d2_f2.jpg |
+      | d2_f2.jpg |
+      | d2_f3.jpg |
+      | d2_f4.jpg |
 
 
   @ftls

@@ -94,7 +94,7 @@ Feature: Generate a list of ftools-friendly-files
     And the stdout should not contain "file_no_ext"
 
   @ftls
-  Scenario: The output shows files inside given directories
+  Scenario: The command output shows files inside given directories
     Given a directory named "fotos1"
     And empty files named:
       | ./fotos1/d1_f1.jpg |
@@ -153,9 +153,9 @@ Feature: Generate a list of ftools-friendly-files
       | ./fotos/fotos2/fotos3/f3.jpg |
     When I successfully run `ftls --recursive fotos`
     Then the stdout should contain each of:
-      | fotos/f1.jpg               |
-      | fotos/fotos2/f2.jpg        |
-      | fotos/fotos2/fotos3/f3.jpg |
+      | f1.jpg               |
+      | f2.jpg        |
+      | f3.jpg |
 
   @ftls
   Scenario: The output DOES NOT show unsupported files EVEN if I intentionally enter it as a parameter
@@ -185,14 +185,14 @@ Feature: Generate a list of ftools-friendly-files
       | foto_wrong2.jpg |
     When I successfully run `ftls fotos videos`
     Then the stdout should contain each of:
-      | tos/f1.jpg    |
-      | fotos/f3.jpg  |
-      | fotos/f2.jpg  |
-      | fotos/f4.heic |
-#      | videos/v4.avi   |
-#      | videos/v4.mp4   |
-#      | videos/v4.mpg   |
-#      | videos/v4.dv    |
+      | f1.jpg    |
+      | f3.jpg  |
+      | f2.jpg  |
+      | f4.heic |
+#      | v4.avi   |
+#      | v4.mp4   |
+#      | v4.mpg   |
+#      | v4.dv    |
     And the stdout should not contain any of:
       | foto_wrong1.jpg |
       | foto_wrong2.jpg |
@@ -206,8 +206,8 @@ Feature: Generate a list of ftools-friendly-files
     And empty files named:
     | ./videos/v5_wrong.vvv  |
     When I successfully run `ftls fotos videos`
-    Then the stdout should not contain "fotos/f5_wrong.ppp"
-    And  the stdout should not contain "videos/v5_wrong.vvv"
+    Then the stdout should not contain "f5_wrong.ppp"
+    And  the stdout should not contain "v5_wrong.vvv"
 
   @ftls
   Scenario: Output produces file list filtered with given masks from given directories
@@ -225,13 +225,13 @@ Feature: Generate a list of ftools-friendly-files
 #    | videos/video_yes_.mts  |
     When I successfully run `ftls fotos videos '*_yes*'`
     Then the stdout should contain each of:
-      | fotos/foto1_yes_.jpg  |
-      | fotos/foto1_yes_.heic |
+      | foto1_yes_.jpg  |
+      | foto1_yes_.heic |
 #      | videos/video_yes_.mp4 |
 #      | videos/video_yes_.mts |
     And the stdout should not contain any of:
-      | fotos/foto1_no.jpg  |
-      | fotos/foto1_no.heic |
+      | foto1_no.jpg  |
+      | foto1_no.heic |
 
   @ftls
   Scenario: The output shows only files, no folders (even if folder name looks like a file)

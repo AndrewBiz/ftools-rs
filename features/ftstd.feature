@@ -25,19 +25,18 @@ Feature: Rename original photo and video files into ft-standard names
   Scenario: Non ft-standard files are renamed to ft-standard ones
     Given a directory named "rename1"
     And example files from "features/media/sony_jpg" copied to "rename1" named:
-   | DSC03403.JPG |
-   | DSC03313.JPG |
-   | DSC03499.JPG |
-   | DSC03802.JPG |
-   | DSC04032.JPG |
-
+    | DSC03403.JPG |
+    | DSC03313.JPG |
+    | DSC03499.JPG |
+    | DSC03802.JPG |
+     | DSC04032.JPG |
     When I cd to "rename1"
-    When I run the following commands:
-    """bash
-    ftls | ftstd -a anb
-    """
+    Given an executable named "bin/ftls_ftstd.cmd" with:
+      """bash
+      ftls | ftstd -a anb
+      """
+    When I run `bin/ftls_ftstd.cmd`
     Then the exit status should be 0
-
     Then the stdout should contain each of:
     | 20130103-103254_ANB DSC03313.JPG |
     | 20130103-153908_ANB DSC03403.JPG |
@@ -68,10 +67,11 @@ Feature: Rename original photo and video files into ft-standard names
     | 20130102-005311_BNAA DSC00002.JPG   |
     | 20130103-005311_ANBAN DSC00003.JPG  |
     | 20130104-005311_ANBANB DSC00004.JPG |
-    When I run the following commands:
-    """bash
-    ftls | ftstd -a anb
-    """
+    Given an executable named "bin/ftls_ftstd.cmd" with:
+      """bash
+      ftls | ftstd -a anb
+      """
+    When I run `bin/ftls_ftstd.cmd`
     Then the exit status should be 0
     And the stdout should contain each of:
     | 20130101-005311_ANB DSC00001.JPG    |
@@ -92,14 +92,14 @@ Feature: Rename original photo and video files into ft-standard names
   @ftstd
   Scenario: In verbose mode files are processed with comments printed in stderr channel
     Given example files from "features/media/sony_jpg" copied to "." named:
-   | DSC03403.JPG |
+    | DSC03403.JPG |
     And empty files named:
-   | 20130101-005311_ANB DSC00001.JPG    |
-
-    When I run the following commands:
-    """bash
-    ftls | ftstd -a anb --verbose
-    """
+    | 20130101-005311_ANB DSC00001.JPG    |
+    Given an executable named "bin/ftls_ftstd.cmd" with:
+      """bash
+      ftls | ftstd -a anb --verbose
+      """
+    When I run `bin/ftls_ftstd.cmd`
     Then the exit status should be 0
 
     Then the stdout should contain each of:
@@ -117,11 +117,11 @@ Feature: Rename original photo and video files into ft-standard names
     | 20130102-005311_ANBA DSC00002.JPG   |
     | 20130103-005311_ANBAN DSC00003.JPG  |
     | 20130104-005311_ANBANB DSC00004.JPG |
-    Given an executable named "bin/ftls_ftstd_undo.cmd" with:
+    Given an executable named "bin/ftls_ftstd.cmd" with:
       """bash
       ftls | ftstd --undo
       """
-    When I run `bin/ftls_ftstd_undo.cmd`
+    When I run `bin/ftls_ftstd.cmd`
     Then the exit status should be 0
     And the stdout should contain each of:
     | DSC00001.JPG |

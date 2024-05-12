@@ -1,4 +1,4 @@
-#![feature(unix_sigpipe)]
+// #![feature(unix_sigpipe)]
 mod ftls_lib;
 
 const VERSION: &str = "0.1.1";
@@ -55,7 +55,7 @@ pub struct CliArgs {
     debug: bool,
 }
 
-#[unix_sigpipe = "sig_dfl"]
+// #[unix_sigpipe = "sig_dfl"]
 fn main() {
     let cli_args = CliArgs::parse(); // TODO try_parse - to capture --help and --version events
     if cli_args.debug {

@@ -1,4 +1,4 @@
-#![feature(unix_sigpipe)]
+// #![feature(unix_sigpipe)]
 use anyhow::{Context, Result};
 
 mod ftstd_lib;
@@ -59,7 +59,7 @@ pub struct CliArgs {
     debug: bool,
 }
 
-#[unix_sigpipe = "sig_dfl"] // This is for correct working in pipe mode under unix-like systems
+// #[unix_sigpipe = "sig_dfl"] // This is for correct working in pipe mode under unix-like systems
 fn main() -> Result<()> {
     let cli_args = CliArgs::parse();
 

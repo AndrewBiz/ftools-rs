@@ -7,11 +7,10 @@ Initial setup:
 rustup update
 ```
 
-3. Change to nightly channel:
-
+<!-- 3. Change to nightly channel:
 ```
 rustup override set nightly
-```
+``` -->
 
 4. install ruby
 5. follow features/support/readme-test.md

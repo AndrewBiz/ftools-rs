@@ -134,7 +134,7 @@ impl App {
                 }
             },
         }
-        // checking file name (without extention) if file_name corresponds to the given range
+        // checking file name (without extension) if file_name corresponds to the given range
         if let Some(file_stem) = path.file_stem() {
             if let Some(name) = file_stem.to_str() {
                 if self.range_str_len > 0 {

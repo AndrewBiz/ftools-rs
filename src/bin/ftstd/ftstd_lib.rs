@@ -1,7 +1,7 @@
 use crate::CliArgs;
 use anyhow::{anyhow, Result};
 use atty::Stream;
-use std::{default, io::BufRead};
+use std::io::BufRead;
 
 // app class
 pub struct App {

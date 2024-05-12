@@ -1,9 +1,8 @@
-// #![feature(unix_sigpipe)]
 use anyhow::{Context, Result};
 
 mod ftstd_lib;
 
-const VERSION: &str = "0.1.3";
+const VERSION: &str = "0.1.4";
 const COMMAND_NAME: &str = "ftstd";
 
 // command options and arguments
@@ -59,7 +58,6 @@ pub struct CliArgs {
     debug: bool,
 }
 
-// #[unix_sigpipe = "sig_dfl"] // This is for correct working in pipe mode under unix-like systems
 fn main() -> Result<()> {
     let cli_args = CliArgs::parse();
 

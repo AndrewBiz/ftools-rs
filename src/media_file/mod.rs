@@ -1,7 +1,7 @@
 use crate::tag::{TagDateTime, TagReader};
 use anyhow::{anyhow, Result};
 use regex::Regex;
-use std::default::Default;
+// use std::default::Default;
 use std::path::PathBuf;
 
 pub mod jpg;
@@ -10,10 +10,10 @@ pub mod unsupported;
 #[derive(Debug)]
 pub struct MediaFile {
     pub fs_path_in: PathBuf,        // input full path and name of the file
-    pub fs_path_standard: PathBuf,  // standardtized path and name of the file
+    pub fs_path_standard: PathBuf,  // standardized path and name of the file
     pub fs_path_original: PathBuf,  // original path and name of the file
     file_name_in: String,           // initial full name of the file
-    file_name_standard: String,     // standardtized name of the file
+    file_name_standard: String,     // standardized name of the file
     file_name_original: String,     // original name of the file
     pub fn_already_standard: bool,  // true if the input name was already standard
     media_type: Box<dyn TagReader>, // type of the file

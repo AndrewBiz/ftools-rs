@@ -29,6 +29,7 @@ Feature: Generate a list of ftools-friendly-files
       | supports file types |
       | jpg                 |
       | heic                |
+      | cr3                |
 
 
   @ftls
@@ -54,6 +55,7 @@ Feature: Generate a list of ftools-friendly-files
 #    | foto.png        |
 #    | foto.dng        |
       | foto.heic       |
+      | foto.cr3       |
       | foto_wrong.psd  |
 #    | video.avi       |
 #    | video.mp4       |
@@ -72,6 +74,7 @@ Feature: Generate a list of ftools-friendly-files
     Then the stdout should contain each of:
 #    | foto.jpeg |
       | foto.jpg |
+      | foto.cr3 |
 #    | foto.tif  |
 #    | foto.tiff |
 #    | foto.orf  |

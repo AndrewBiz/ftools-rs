@@ -2,7 +2,7 @@ use anyhow::{Context, Result};
 
 mod ftstd_lib;
 
-const VERSION: &str = "0.1.4";
+const VERSION: &str = "0.2.0";
 const COMMAND_NAME: &str = "ftstd";
 
 // command options and arguments
@@ -13,7 +13,7 @@ use clap::Parser;
 #[command(long_about = None, verbatim_doc_comment)]
 
 /// ****************** Keep Your Media Files In Order (c) ANB ******************
-/// ftstd renames the original media file to the ft-standard name. For example,
+///   ftstd renames the original media file to the ft-standard name. For example,
 /// the file "DSC03455.JPG" with Exif:DateTimeOriginal = "2013:01:08 12:41:45"
 /// and the author set as "ANB" will be renamed to "20130108-124145_ANB DSC03455.JPG"
 /// ---
@@ -24,16 +24,23 @@ use clap::Parser;
 /// ---
 /// By default date-time info is taken from EXIF area (in most cases DateTimeOriginal tag).
 /// If no internal tags found - FileModifiedDate is used instead
-/// ftstd acts as a 'filter' meaning it expects the input files to be passed
+///   ftstd can work in 2 modes:
+/// 1) PIPE MODE: ftstd acts as a 'filter' meaning it expects the input files to be passed
 /// to STDIN and after the job is done it produces STDOUT with the list of renamed
 /// files. In other words this command is intended to be used with other programs
 /// connected via pipes, e.g.:
-/// ---
+/// ```
 ///     ftls | ftstd -a anb | some_other_program_using_stdin
-/// ---
+/// ```
+/// 2) DIRECT MODE: ftstd expects one file_name as cmd argument and processes excactly
+/// this one file. This mode is good to use via programs like xarg, parallel etc.
+/// For example - process all jpg files in current and children dirs using parallel:
+/// ```
+///     find . -iname "*.jpg" -type f | parallel --joblog ftstd_log.txt ftstd -a anb {}
+/// ```
 /// The program is designed to be safe to re-run on the same file several times
 /// - every re-run produces the same result (idempotent behaviour).
-/// Once the file was renamed to the ft-standard name, the date-time kept in the name
+/// Once the file was renamed to the ft-standard name, the date-time in the name
 /// is considered as a master date-time of the content creation and will not be
 /// changed by re-running ftstd unless user explicitly sets correspondig option.
 /// This program in some cases uses external utility ExifTool created by Phil Harvey
@@ -41,6 +48,10 @@ use clap::Parser;
 
 pub struct CliArgs {
     // TODO! - validation via #[arg(value_parser = valid_autor)]
+    /// File to be processed. If set the program will process only this one file and will ingnore stdin.
+    /// If not set, the program is run in pipe mode expecting file names via stdin
+    file_name: Option<String>,
+
     #[arg(long, short = 'a', required_unless_present("undo"))]
     /// Sets the author nickname. The nickname should be 3 to 6 ASCII chars long
     author: Option<String>,
@@ -72,7 +83,11 @@ fn main() -> Result<()> {
     log::debug!("Arguments set by the user: {:?}", &cli_args);
 
     let app = ftstd_lib::App::init(cli_args);
-    app.run().context("Running ftstd")?;
+    if app.file_name == "" {
+        app.run_pipe_mode().context("Running ftstd")?;
+    } else {
+        app.run_direct_mode().context("Running ftstd")?;
+    }
 
     log::debug!("FINISH main");
     Ok(())

@@ -3,12 +3,11 @@ use std::io::Write;
 pub mod media_file;
 pub mod tag;
 
-pub const SUPPORTED_FILE_TYPE: [&str; 3] = ["jpg", "heic", "cr3"];
-// FILE_TYPE_IMAGE_NORMAL = %w[jpg jpeg tif tiff png heic].freeze
-// FILE_TYPE_IMAGE_RAW = %w[orf arw dng].freeze
-// FILE_TYPE_IMAGE = FILE_TYPE_IMAGE_NORMAL + FILE_TYPE_IMAGE_RAW
-// FILE_TYPE_VIDEO = %w[avi mp4 mpg mts dv mov mkv m2t m2ts 3gp].freeze
-// FILE_TYPE_AUDIO = %w[wav].freeze
+pub const SUPPORTED_FILE_TYPE: [&str; 31] = [
+    "jpg", "jpeg", "heic", "tif", "tiff", "png", "cr2", "cr3", "orf", "arw", "dng", "avi", "mp4",
+    "mpg", "mts", "dv", "mov", "mkv", "m2t", "m2ts", "3gp", "wav", "mp3", "flac", "aac", "ogg",
+    "m4a", "wma", "alac", "aiff", "ape",
+];
 
 // output line to stdout
 pub fn output_to_stdout(line: &String) {

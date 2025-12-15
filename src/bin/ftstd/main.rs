@@ -2,7 +2,7 @@ use anyhow::{Context, Result};
 
 mod ftstd_lib;
 
-const VERSION: &str = "0.2.0";
+const VERSION: &str = "1.0.0-beta.1";
 const COMMAND_NAME: &str = "ftstd";
 
 // command options and arguments
@@ -36,7 +36,7 @@ use clap::Parser;
 /// this one file. This mode is good to use via programs like xarg, parallel etc.
 /// For example - process all jpg files in current and children dirs using parallel:
 /// ```
-///     find . -iname "*.jpg" -type f | parallel --joblog ftstd_log.txt ftstd -a anb {}
+///     find . -iname "*.jpg" -type f | parallel ftstd -a anb {}
 /// ```
 /// The program is designed to be safe to re-run on the same file several times
 /// - every re-run produces the same result (idempotent behaviour).

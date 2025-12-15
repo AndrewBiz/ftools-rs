@@ -1,6 +1,6 @@
 mod ftls_lib;
 
-const VERSION: &str = "0.1.2";
+const VERSION: &str = "1.0.0-beta.1";
 const COMMAND_NAME: &str = "ftls";
 
 // command options and arguments
